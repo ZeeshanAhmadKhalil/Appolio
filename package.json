@@ -15,6 +15,7 @@
     "google-map-react": "^1.1.7",
     "google-maps-react": "^2.0.6",
     "http2": "^3.3.7",
+    "npm-overlapping-marker-spiderfier": "^1.0.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",

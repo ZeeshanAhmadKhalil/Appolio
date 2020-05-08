@@ -2181,9 +2181,10 @@ export class Vaccinate extends Component{
     // console.log("Assigned=" + vaccines_assigned_and_not_used_count)
     // console.log(vaccines_assigned_and_not_used)
     var endDate = new Date();
-    endDate.setMonth(endDate.getMonth() - 3);    // Calculate Age Range b/t 3 months to 6 years
+    endDate.setMonth(endDate.getMonth() - 0);
+    endDate.setDate(endDate.getDate() - 1);    // Calculate Age Range b/t 1 days to 5 years
     var startDate = new Date();
-    startDate.setFullYear(startDate.getFullYear() - 6);
+    startDate.setFullYear(startDate.getFullYear() - 5);
     $('#datepicker').datepicker({
       autoclose: true,
       format: 'dd-mm-yyyy',
@@ -2299,19 +2300,89 @@ export class Report extends Component{
       worker_vaccine:"",
     }
   }
-  renderAge(dateofBirth){
-    var dateofBirth=dateofBirth.split("-")
-    var birthday=new Date(dateofBirth[2],dateofBirth[1],dateofBirth[0])
-    var ageDifMs = Date.now() - birthday.getTime();
-    var age_in_days= parseInt((ageDifMs / (1000*60*60*24)))
-    var remaning_days_after_years=age_in_days%365
-    var age_in_years=parseInt(age_in_days/365)
-    var remaning_days_after_months=remaning_days_after_years%30
-    var age_in_months=parseInt(remaning_days_after_years/30)
+  calculateAge=(dateString)=>{
+    var now = new Date();
+    var today = new Date(now.getYear(), now.getMonth(), now.getDate());
+
+    var yearNow = now.getYear();
+    var monthNow = now.getMonth();
+    var dateNow = now.getDate();
+    dateString=dateString.split("-")
+    console.log(dateString[2])
+    var dob = new Date(dateString[2].toString(),
+      dateString[1].toString()-1,
+      dateString[0].toString()
+    );
+    console.log(dob)
+    var yearDob = dob.getYear();
+    var monthDob = dob.getMonth();
+    var dateDob = dob.getDate();
+    var age = {};
+    var ageString = "";
+    var yearString = "";
+    var monthString = "";
+    var dayString = "";
+
+
+    var yearAge = yearNow - yearDob;
+
+    if (monthNow >= monthDob)
+      var monthAge = monthNow - monthDob;
+    else {
+      yearAge--;
+      var monthAge = 12 + monthNow - monthDob;
+    }
+
+    if (dateNow >= dateDob)
+      var dateAge = dateNow - dateDob;
+    else {
+      monthAge--;
+      var dateAge = 31 + dateNow - dateDob;
+
+      if (monthAge < 0) {
+        monthAge = 11;
+        yearAge--;
+      }
+    }
+
+    age = {
+      years: yearAge,
+      months: monthAge,
+      days: dateAge
+    };
+
+    if (age.years > 1) yearString = " years";
+    else yearString = " year";
+    if (age.months > 1) monthString = " months";
+    else monthString = " month";
+    if (age.days > 1) dayString = " days";
+    else dayString = " day";
+
+
+    if ((age.years > 0) && (age.months > 0) && (age.days > 0))
+      ageString = age.years + yearString + ", " + age.months + monthString + ", and " + age.days + dayString + " old.";
+    else if ((age.years == 0) && (age.months == 0) && (age.days > 0))
+      ageString = "Only " + age.days + dayString + " old!";
+    else if ((age.years > 0) && (age.months == 0) && (age.days == 0))
+      ageString = age.years + yearString + " old. Happy Birthday!!";
+    else if ((age.years > 0) && (age.months > 0) && (age.days == 0))
+      ageString = age.years + yearString + " and " + age.months + monthString + " old.";
+    else if ((age.years == 0) && (age.months > 0) && (age.days > 0))
+      ageString = age.months + monthString + " and " + age.days + dayString + " old.";
+    else if ((age.years > 0) && (age.months == 0) && (age.days > 0))
+      ageString = age.years + yearString + " and " + age.days + dayString + " old.";
+    else if ((age.years == 0) && (age.months > 0) && (age.days == 0))
+      ageString = age.months + monthString + " old.";
+    else ageString = "Oops! Could not calculate age!";
+
+    return ageString  
+  }
+  renderAge(dateString) {
+    var ageString=this.calculateAge(dateString)
     // var ageDate = new Date(ageDifMs); // miliseconds from epoch
     // var age=Math.abs(ageDate.getUTCFullYear() - 1970);
-    return(
-    <td>{age_in_years} years {age_in_months} months {remaning_days_after_months} days</td>
+    return ( 
+      <td> {ageString} </td>
     )
   }
   renderTableData() {

@@ -148,9 +148,9 @@ th{
 	position: fixed;
 	width: 100%;
 }
-section.content{
-	/* margin-top: 100px; */
-}
+/* section.content{
+	margin-top: 100px;
+} */
 .work_done_bar{
 	margin-top: 5px;
 	margin-bottom: 0px;
@@ -211,12 +211,12 @@ section.content{
 	height: auto !important;
 	float: left;
 }
-.charts_box{
-	/* height: 400px; */
-}
-#map_box{
-	/* width: 50%; */
-}
+/* .charts_box{
+	height: 400px;
+} */
+/* #map_box{
+	width: 50%;
+} */
 #google_map{
 	height: 350px;
 }
