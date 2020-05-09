@@ -108,25 +108,12 @@ export class MapContainer extends Component {
     return ageString  
   }
   renderMarkers(){
-    // var longitudes=this.props.child_record.map(a=>parseFloat(a.longitude).toFixed(5))
-    // console.log(longitudes)
     var longitudes=[]
     return this.props.child_record.map((child,index)=>{
       const {longitude,latitude,childname,dateofBirth}=child
       var ageString=this.calculateAge(dateofBirth)
-      // var the_longitude=longitude
-      // longitude=parseFloat(longitude).toFixed(5)
-      // console.log(parseFloat(longitude).toFixed(5))
-      // if(longitudes.includes(parseFloat(longitude).toFixed(5))){
-      //   console.log("same")
-      //   the_longitude=longitude-0.0001
-      //   longitudes.push(parseFloat(the_longitude).toFixed(5))
-      // } else{
-      //   longitudes.push(parseFloat(longitude).toFixed(5))
-      // }
       return(
         <Marker onClick={this.onMarkerClick}
-                // name={'Current location'}
                 title={childname+"("+ageString+")"}
                 position={{lat:latitude,lng:longitude}}
                 draggable={true}
@@ -135,8 +122,6 @@ export class MapContainer extends Component {
     })
   }
   render() {
-    // console.log(this.props.child_record);
-    
     return (
       <Map 
         google={this.props.google} 
@@ -146,10 +131,7 @@ export class MapContainer extends Component {
             lng: 72.3609
         }}
       >
-        {/* <Spiderfy> */}
-          {this.renderMarkers()}
-        {/* </Spiderfy> */}
-        
+          {this.renderMarkers()}        
       </Map>
     );
   }
