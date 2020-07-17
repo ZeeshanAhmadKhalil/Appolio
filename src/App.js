@@ -24,13 +24,15 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 // Fetch the service account key JSON file contents
-var serviceAccount = require("./serviceAccountKey.json");
+// not using admin
+// var serviceAccount = require("./serviceAccountKey.json");
 
-// Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://appolio-1201a.firebaseio.com"
-});
+// // Initialize the app with a service account, granting admin privileges
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://appolio-1201a.firebaseio.com"
+// });
+
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -280,8 +282,8 @@ export class SignUp extends Component {
   }
   name_changed=(name)=>{
     this.setState({ name: name })
-    if(name.length>10||name.length<5){
-      $(".signup_name_error").html("5-10 chars are allowed")
+    if(name.length>12||name.length<7){
+      $(".signup_name_error").html("7-12 chars are allowed")
       $(".signup_name_error").css("visibility", "visible");
     } else if(!/^[a-zA-Z ]*$/.test(name)){
       $(".signup_name_error").html("Only alphabets and spaces are allowed")
@@ -1032,6 +1034,7 @@ export class Add_Workers extends Component{
       obj["key"]=key
       structured_workers.push(obj)
     }
+    console.log(structured_workers)
     if(structured_workers.length==0){
       return <td colSpan={6}><h3 class="no_data">There are no workers signed up yet</h3></td>
     } else{
@@ -1174,7 +1177,10 @@ export class Workers extends Component{
         vaccines_assigned=vaccines_assigned-vaccines_used
         var work_done=this.getWorkDone(vaccines_used,vaccines_assigned)
         // console.log(work_done.toString())
-
+        console.log(male_pic)
+        console.log(female_pic)
+        console.log(profile_pic)
+        console.log(gender)
         return (
           <div class="col-md-4">
             <div class="box box-widget widget-user-2">
@@ -1252,10 +1258,11 @@ export class Add_Vaccine extends Component{
     };
   }
   add_vaccine=()=>{
-    console.log("adding vaccine")
-    var database = firebase.database().ref("VACCINE");
-    var vaccine_id = Math.random().toString(36).substring(7);
-      database.child(vaccine_id).set({
+    if ($(".add_vaccine_vaccine_name").html() == "..." && $(".add_vaccine_company_name").html() == "..."){
+        console.log("adding vaccine")
+        var database = firebase.database().ref("VACCINE");
+        var vaccine_id = Math.random().toString(36).substring(7);
+        database.child(vaccine_id).set({
         vaccine_name:this.state.vaccine_name,
         company_name:this.state.company_name,
         vaccine_type:this.state.vaccine_type,
@@ -1264,6 +1271,30 @@ export class Add_Vaccine extends Component{
         vaccine_id:vaccine_id,
       })
       this.props.changePage("vaccines")
+    }
+  }
+  vaccine_name_changed=(name)=>{
+    console.log(name)
+    this.setState({ vaccine_name: name })
+    if(name.length==0){
+      $(".add_vaccine_vaccine_name").html("Enter Vaccine Name")
+      $(".add_vaccine_vaccine_name").css("visibility", "visible");
+    } else{
+      $(".add_vaccine_vaccine_name").html("...")
+      $(".add_vaccine_vaccine_name").css("visibility", "hidden");
+    }
+  }
+
+  company_name_changed=(name)=>{
+    console.log(name)
+    this.setState({ company_name: name })
+    if(name.length==0){
+      $(".add_vaccine_company_name").html("Enter company Name")
+      $(".add_vaccine_company_name").css("visibility", "visible");
+    } else{
+      $(".add_vaccine_company_name").html("...")
+      $(".add_vaccine_company_name").css("visibility", "hidden");
+    }
   }
   render(){
     // console.log(this.state)
@@ -1279,12 +1310,14 @@ export class Add_Vaccine extends Component{
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Vaccine Name</label>
-                  <input onChange={(event) => { this.setState({ vaccine_name: event.target.value }) }} type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter vaccine name" />
+                  <input onChange={(event)=>{this.vaccine_name_changed(event.target.value)}} type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter vaccine name" />
+                  <span class="add_vaccine_vaccine_name validation_msg">Enter Vaccine name</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Company Name</label>
-                  <input onChange={(event) => { this.setState({ company_name: event.target.value }) }} type="email" class="form-control" id="exampleInputPassword1"
+                  <input onChange={(event)=>{this.company_name_changed(event.target.value)}} type="email" class="form-control" id="exampleInputPassword1"
                     placeholder="Enter Company Name" />
+                  <span class="add_vaccine_company_name validation_msg">Enter Company name</span>
                 </div>
                 <div class="form-group">
                   <label>Vaccine Type</label>
@@ -1625,8 +1658,8 @@ export class Edit_Profile extends Component{
   }
   name_changed=(name)=>{
     this.setState({ name: name })
-    if(name.length>10||name.length<5){
-      $(".edit_name_error").html("5-10 chars are allowed")
+    if(name.length>12||name.length<7){
+      $(".edit_name_error").html("7-12 chars are allowed")
       $(".edit_name_error").css("visibility", "visible");
     } else if(!/^[a-zA-Z ]*$/.test(name)){
       $(".edit_name_error").html("Only alphabets and spaces are allowed")
@@ -1981,8 +2014,8 @@ export class Vaccinate extends Component{
   }
   child_name_changed=(name)=>{
     this.setState({ childname: name })
-    if(name.length>10||name.length<5){
-      $(".vaccinate_child_name").html("5-10 chars are allowed")
+    if(name.length>12||name.length<7){
+      $(".vaccinate_child_name").html("7-12 chars are allowed")
       $(".vaccinate_child_name").css("visibility", "visible");
     } else if(!/^[a-zA-Z ]*$/.test(name)){
       $(".vaccinate_child_name").html("Only alphabets and spaces are allowed")
@@ -2004,8 +2037,8 @@ export class Vaccinate extends Component{
   }
   father_name_changed=(name)=>{
     this.setState({ fathername: name })
-    if(name.length>10||name.length<5){
-      $(".vaccinate_father_name").html("5-10 chars are allowed")
+    if(name.length>12||name.length<7){
+      $(".vaccinate_father_name").html("7-12 chars are allowed")
       $(".vaccinate_father_name").css("visibility", "visible");
     } else if(!/^[a-zA-Z ]*$/.test(name)){
       $(".vaccinate_father_name").html("Only alphabets and spaces are allowed")
@@ -2017,8 +2050,8 @@ export class Vaccinate extends Component{
   }
   mother_name_changed=(name)=>{
     this.setState({ mothername: name })
-    if(name.length>10||name.length<5){
-      $(".vaccinate_mother_name").html("5-10 chars are allowed")
+    if(name.length>12||name.length<7){
+      $(".vaccinate_mother_name").html("7-12 chars are allowed")
       $(".vaccinate_mother_name").css("visibility", "visible");
     } else if(!/^[a-zA-Z ]*$/.test(name)){
       $(".vaccinate_mother_name").html("Only alphabets and spaces are allowed")
@@ -2061,13 +2094,15 @@ export class Vaccinate extends Component{
   }
   address_changed=(name)=>{
     this.setState({ address: name })
-    if(name.length>50||name.length<15){
-      $(".vaccinate_address").html("15-50 chars are allowed")
+    if(name.length>80||name.length<15){
+      $(".vaccinate_address").html("15-80 chars are allowed")
       $(".vaccinate_address").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
-      $(".vaccinate_address").html("Only alphabets and spaces are allowed")
-      $(".vaccinate_address").css("visibility", "visible");
-    } else{
+    }
+    //  else if(!/^[a-zA-Z ]*$/.test(name)){
+    //   $(".vaccinate_address").html("Only alphabets and spaces are allowed")
+    //   $(".vaccinate_address").css("visibility", "visible");
+    // } 
+    else{
       $(".vaccinate_address").html("...")
       $(".vaccinate_address").css("visibility", "hidden");
     }
