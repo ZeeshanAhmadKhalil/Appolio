@@ -19,11 +19,11 @@ const $ = window.$;
 //   popupAnchor: [10, -44],
 //   iconSize: [25, 55],
 // })
-let profile_pic="";
-if(window.localStorage.getItem("gender")=="Male"){
-  profile_pic=male_pic
-} else{
-  profile_pic=female_pic
+let profile_pic = "";
+if (window.localStorage.getItem("gender") == "Male") {
+  profile_pic = male_pic
+} else {
+  profile_pic = female_pic
 }
 var firebaseConfig = {
   apiKey: "AIzaSyB5NIXeyJ6xFcXPROJW4DIhMWuBGdktIaA",
@@ -34,7 +34,7 @@ var firebaseConfig = {
   messagingSenderId: "18463849163",
   appId: "1:18463849163:web:153628101f1a20d609394e"
 };
-firebase.initializeApp(firebaseConfig); 
+firebase.initializeApp(firebaseConfig);
 // Fetch the service account key JSON file contents
 // not using admin
 // var serviceAccount = require("./serviceAccountKey.json");
@@ -53,7 +53,7 @@ export class Login extends Component {
       password: "",
       role: "Admin",
       admin_data: "",
-      workers_data:""
+      workers_data: ""
     }
   }
   login = () => {
@@ -113,27 +113,27 @@ export class Login extends Component {
       }
     }
   }
-  email_changed=(email)=>{
+  email_changed = (email) => {
     this.setState({ email: email })
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(re.test(String(email).toLowerCase())){
+    if (re.test(String(email).toLowerCase())) {
       $(".login_email_error").html("...")
       $(".login_email_error").css("visibility", "hidden");
-    } else{
+    } else {
       $(".login_email_error").html("Enter valid email")
       $(".login_email_error").css("visibility", "visible");
     }
   }
-  password_changed=(password)=>{
+  password_changed = (password) => {
     this.setState({ password: password })
-    if(password.length<8){
+    if (password.length < 8) {
       $(".login_password_error").html("Min chars could be 8")
       $(".login_password_error").css("visibility", "visible");
-    } else if(!/[a-z]/.test(password)||!/[A-Z]/.test(password)||!/[0-9]/.test(password)){
+    } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
       $(".login_password_error").html("There should be a num, lower and upper case letter")
       $(".login_password_error").css("visibility", "visible");
     }
-    else{
+    else {
       $(".login_password_error").html("...")
       $(".login_password_error").css("visibility", "hidden");
     }
@@ -187,9 +187,9 @@ export class SignUp extends Component {
       gender: "Male",
       phone_no: "",
       role: "Worker",
-      status:"In Progress",
+      status: "In Progress",
       admin_data: "",
-      worker_data:"",
+      worker_data: "",
     };
   }
   sign_up = () => {
@@ -226,91 +226,91 @@ export class SignUp extends Component {
       }
     }
   }
-  email_changed=(email,emails)=>{
+  email_changed = (email, emails) => {
     this.setState({ email: email })
     console.log(emails)
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(!re.test(String(email).toLowerCase())){
+    if (!re.test(String(email).toLowerCase())) {
       $(".signup_email_error").html("Enter valid email")
       $(".signup_email_error").css("visibility", "visible");
-    } else if(emails.includes(email)){
+    } else if (emails.includes(email)) {
       $(".signup_email_error").html("Email already exists")
       $(".signup_email_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".signup_email_error").html("...")
       $(".signup_email_error").css("visibility", "hidden");
     }
   }
-  password_changed=(password)=>{
+  password_changed = (password) => {
     this.setState({ password: password })
-    if(password.length<8){
+    if (password.length < 8) {
       $(".signup_password_error").html("Min chars could be 8")
       $(".signup_password_error").css("visibility", "visible");
-    } else if(!/[a-z]/.test(password)||!/[A-Z]/.test(password)||!/[0-9]/.test(password)){
+    } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
       $(".signup_password_error").html("There should be a num, lower and upper case letter")
       $(".signup_password_error").css("visibility", "visible");
     }
-    else{
+    else {
       $(".signup_password_error").html("...")
       $(".signup_password_error").css("visibility", "hidden");
     }
-    if(password!=$("#repeat_password_").val()){
+    if (password != $("#repeat_password_").val()) {
       $(".signup_repeat_password_error").html("Password doesn't match")
       $(".signup_repeat_password_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".signup_repeat_password_error").html("...")
       $(".signup_repeat_password_error").css("visibility", "hidden");
     }
   }
-  repeat_password_changed=(repeat_password)=>{
+  repeat_password_changed = (repeat_password) => {
     this.setState({ repeat_password: repeat_password })
-    if(repeat_password.length<8){
+    if (repeat_password.length < 8) {
       $(".signup_repeat_password_error").html("Min chars could be 8")
       $(".signup_repeat_password_error").css("visibility", "visible");
-    } else if(!/[a-z]/.test(repeat_password)||!/[A-Z]/.test(repeat_password)||!/[0-9]/.test(repeat_password)){
+    } else if (!/[a-z]/.test(repeat_password) || !/[A-Z]/.test(repeat_password) || !/[0-9]/.test(repeat_password)) {
       $(".signup_repeat_password_error").html("There should be a num, lower and upper case letter")
       $(".signup_repeat_password_error").css("visibility", "visible");
-    } else if(repeat_password!=this.state.password){
+    } else if (repeat_password != this.state.password) {
       $(".signup_repeat_password_error").html("Password doesn't match")
       $(".signup_repeat_password_error").css("visibility", "visible");
     }
-    else{
+    else {
       $(".signup_repeat_password_error").html("...")
       $(".signup_repeat_password_error").css("visibility", "hidden");
     }
   }
-  cnic_changed=(cnic,cnics)=>{
+  cnic_changed = (cnic, cnics) => {
     this.setState({ cnic: cnic })
-    if(cnic.length!=13){
+    if (cnic.length != 13) {
       $(".signup_cnic_error").html("The digits could be 13 exact")
       $(".signup_cnic_error").css("visibility", "visible");
-    } else if(cnics.includes(cnic)){
+    } else if (cnics.includes(cnic)) {
       $(".signup_cnic_error").html("Cnic already exists")
       $(".signup_cnic_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".signup_cnic_error").html("...")
       $(".signup_cnic_error").css("visibility", "hidden");
     }
   }
-  name_changed=(name)=>{
+  name_changed = (name) => {
     this.setState({ name: name })
-    if(name.length>12||name.length<7){
+    if (name.length > 12 || name.length < 7) {
       $(".signup_name_error").html("7-12 chars are allowed")
       $(".signup_name_error").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
+    } else if (!/^[a-zA-Z ]*$/.test(name)) {
       $(".signup_name_error").html("Only alphabets and spaces are allowed")
       $(".signup_name_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".signup_name_error").html("...")
       $(".signup_name_error").css("visibility", "hidden");
     }
   }
-  phone_no_changed=(phone_no)=>{
+  phone_no_changed = (phone_no) => {
     this.setState({ phone_no: phone_no })
-    if(phone_no.length!=11){
+    if (phone_no.length != 11) {
       $(".signup_phone_no_error").html("The digits could be 11 exact")
       $(".signup_phone_no_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".signup_phone_no_error").html("...")
       $(".signup_phone_no_error").css("visibility", "hidden");
     }
@@ -352,13 +352,13 @@ export class SignUp extends Component {
             <div class="form-box signup_form_box">
               <h3 class="loginform-title signup_title">{this.state.role}  Sign Up</h3>
               <div id="login" class="input-group signup_form">
-                <input onChange={(event) => { this.email_changed(event.target.value,emails) }} type="email" class="input-field" name="coordinator_email" placeholder="Enter Email" required />
+                <input onChange={(event) => { this.email_changed(event.target.value, emails) }} type="email" class="input-field" name="coordinator_email" placeholder="Enter Email" required />
                 <span class="signup_email_error validation_msg">Enter email</span>
-                <input onChange={(event) => { this.password_changed(event.target.value)}} type="password" class="input-field" name="coordinator_password" placeholder="Enter Password" required />
+                <input onChange={(event) => { this.password_changed(event.target.value) }} type="password" class="input-field" name="coordinator_password" placeholder="Enter Password" required />
                 <span class="signup_password_error validation_msg">Enter Password</span>
                 <input onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="input-field" name="coordinator_password2" id="repeat_password_" placeholder="Repeat Password" required />
                 <span class="signup_repeat_password_error validation_msg">Repeat Password</span>
-                <input onChange={(event) => { this.cnic_changed(event.target.value,cnics) }} type="number" class="input-field" name="coordinator_CNIC" placeholder="Enter CNIC" required />
+                <input onChange={(event) => { this.cnic_changed(event.target.value, cnics) }} type="number" class="input-field" name="coordinator_CNIC" placeholder="Enter CNIC" required />
                 <span class="signup_cnic_error validation_msg">Enter cnic</span>
                 <input onChange={(event) => { this.name_changed(event.target.value) }} type="text" class="input-field" name="coordinator_name" placeholder="Enter Your Name" required />
                 <span class="signup_name_error validation_msg">Enter name</span>
@@ -388,13 +388,13 @@ export class SignUp extends Component {
             <div class="form-box signup_form_box">
               <h3 class="loginform-title signup_title">{this.state.role} Sign Up</h3>
               <div id="login" class="input-group signup_form">
-                <input onChange={(event) => { this.email_changed(event.target.value,emails) }} type="email" class="input-field" name="coordinator_email" placeholder="Enter Email" required />
+                <input onChange={(event) => { this.email_changed(event.target.value, emails) }} type="email" class="input-field" name="coordinator_email" placeholder="Enter Email" required />
                 <span class="signup_email_error validation_msg">Enter email</span>
-                <input onChange={(event) => { this.password_changed(event.target.value)}} type="password" class="input-field" name="coordinator_password" placeholder="Enter Password" required />
+                <input onChange={(event) => { this.password_changed(event.target.value) }} type="password" class="input-field" name="coordinator_password" placeholder="Enter Password" required />
                 <span class="signup_password_error validation_msg">Enter Password</span>
                 <input onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="input-field" name="coordinator_password2" id="repeat_password_" placeholder="Repeat Password" required />
                 <span class="signup_repeat_password_error validation_msg">Repeat Password</span>
-                <input onChange={(event) => { this.cnic_changed(event.target.value,cnics) }} type="number" class="input-field" name="coordinator_CNIC" placeholder="Enter CNIC" required />
+                <input onChange={(event) => { this.cnic_changed(event.target.value, cnics) }} type="number" class="input-field" name="coordinator_CNIC" placeholder="Enter CNIC" required />
                 <span class="signup_cnic_error validation_msg">Enter cnic</span>
                 <input onChange={(event) => { this.name_changed(event.target.value) }} type="text" class="input-field" name="coordinator_name" placeholder="Enter Your Name" required />
                 <span class="signup_name_error validation_msg">Enter name</span>
@@ -421,7 +421,7 @@ export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page:"dashboard_index",
+      page: "dashboard_index",
     }
   }
   sign_out = () => {
@@ -434,13 +434,13 @@ export class Dashboard extends Component {
     // this.props.changePage("login")
     window.location.reload()
   }
-  change_page=(page)=>{
+  change_page = (page) => {
     // var anchors=document.getElementsByClassName("")
     $(".treeview").removeClass("active")
     $("#".concat(page)).addClass("active")
-    this.setState({page:page})
+    this.setState({ page: page })
   }
-  componentDidMount(){
+  componentDidMount() {
     // window.location.reload();
   }
   render() {
@@ -449,37 +449,37 @@ export class Dashboard extends Component {
       <div class="">
         {/* This is Dashboard of {window.localStorage.getItem("name")} */}
         <header class="main-header">
-          {window.localStorage.getItem("role")=="Admin" &&
-          <a style={{cursor:"pointer"}} class="logo">
-            <span class="logo-mini"><b>C</b></span>
-            <span class="logo-lg">Coordinator</span>
-          </a>
+          {window.localStorage.getItem("role") == "Admin" &&
+            <a style={{ cursor: "pointer" }} class="logo">
+              <span class="logo-mini"><b>C</b></span>
+              <span class="logo-lg">Coordinator</span>
+            </a>
           }
-          {window.localStorage.getItem("role")=="Worker" &&
-          <a style={{cursor:"pointer"}} class="logo">
-            <span class="logo-mini"><b>V</b></span>
-            <span class="logo-lg">Vaccinator</span>
-          </a>
+          {window.localStorage.getItem("role") == "Worker" &&
+            <a style={{ cursor: "pointer" }} class="logo">
+              <span class="logo-mini"><b>V</b></span>
+              <span class="logo-lg">Vaccinator</span>
+            </a>
           }
           <nav class="navbar navbar-static-top">
-            <a style={{cursor:"pointer"}} class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <a style={{ cursor: "pointer" }} class="sidebar-toggle" data-toggle="push-menu" role="button">
               <span class="sr-only">Toggle navigation</span>
             </a>
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
                 <li id="logout-top" onClick={this.sign_out} class="dropdown tasks-menu" title="Click to logout">
-                  <a style={{cursor:"pointer"}} class="dropdown-toggle">
+                  <a style={{ cursor: "pointer" }} class="dropdown-toggle">
                     <i class="fa fa-power-off" ></i>
                   </a>
                 </li>
-                <li onClick={()=>{this.change_page("edit_profile")}} class="dropdown messages-menu" title="Click to edit profile">
-                  <a style={{cursor:"pointer"}} class="dropdown-toggle" >
+                <li onClick={() => { this.change_page("edit_profile") }} class="dropdown messages-menu" title="Click to edit profile">
+                  <a style={{ cursor: "pointer" }} class="dropdown-toggle" >
                     <i class="fa fa-edit" ></i>
                   </a>
 
                 </li>
-                <li onClick={()=>{this.change_page("profile")}} class="dropdown notifications-menu" title="Click to view profile">
-                  <a style={{cursor:"pointer"}} class="dropdown-toggle">
+                <li onClick={() => { this.change_page("profile") }} class="dropdown notifications-menu" title="Click to view profile">
+                  <a style={{ cursor: "pointer" }} class="dropdown-toggle">
                     <i class="fa fa-id-badge" ></i>
                   </a>
                 </li>
@@ -516,76 +516,76 @@ export class Dashboard extends Component {
 
             <ul class="sidebar-menu" data-widget="tree">
               <li class="header">YOUR WORK</li>
-                {window.localStorage.getItem("role")=="Admin" &&
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="dashboard_index" class="active treeview">
-                  <a onClick={()=>{this.change_page("dashboard_index")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("dashboard_index") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Admin" &&
+              }
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="add_workers" class=" treeview">
-                  <a onClick={()=>{this.change_page("add_workers")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("add_workers") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-user-plus"></i> <span>Add Workers</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Admin" &&
+              }
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="workers" class=" treeview">
-                  <a onClick={()=>{this.change_page("workers")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("workers") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-users"></i> <span>Workers</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Admin" &&
+              }
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="add_vaccine" class=" treeview">
-                  <a onClick={()=>{this.change_page("add_vaccine")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("add_vaccine") }} style={{ cursor: "pointer" }}>
                     <i class="fas fa-clinic-medical"></i> <span>Add Vaccine</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Admin" &&
+              }
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="vaccines" class=" treeview">
-                  <a onClick={()=>{this.change_page("vaccines")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("vaccines") }} style={{ cursor: "pointer" }}>
                     <i class="fas fa-capsules"></i> <span>Vaccines</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Admin" &&
+              }
+              {window.localStorage.getItem("role") == "Admin" &&
                 <li id="report" class=" treeview">
-                  <a onClick={()=>{this.change_page("report")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("report") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-list-alt"></i> <span>Report</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Worker" &&
+              }
+              {window.localStorage.getItem("role") == "Worker" &&
                 <li id="dashboard_index" class="active treeview">
-                  <a onClick={()=>{this.change_page("dashboard_index")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("dashboard_index") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Worker" &&
+              }
+              {window.localStorage.getItem("role") == "Worker" &&
                 <li id="assigned_vaccines" class=" treeview">
-                  <a onClick={()=>{this.change_page("assigned_vaccines")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("assigned_vaccines") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-briefcase"></i> <span>Assigned Vaccines</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Worker" &&
+              }
+              {window.localStorage.getItem("role") == "Worker" &&
                 <li id="vaccinate" class=" treeview">
-                  <a onClick={()=>{this.change_page("vaccinate")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("vaccinate") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-syringe"></i> <span>Vaccinate</span>
                   </a>
                 </li>
-                }
-                {window.localStorage.getItem("role")=="Worker" &&
+              }
+              {window.localStorage.getItem("role") == "Worker" &&
                 <li id="report" class=" treeview">
-                  <a onClick={()=>{this.change_page("report")}} style={{cursor:"pointer"}}>
+                  <a onClick={() => { this.change_page("report") }} style={{ cursor: "pointer" }}>
                     <i class="fa fa-list-alt"></i> <span>Report</span>
                   </a>
                 </li>
-                }
+              }
               {/* BELOW CODE IS FOR LATER ENHENCMENT OF APP */}
               {/* <li class="treeview">
                 <a style={{cursor:"pointer"}}>
@@ -621,43 +621,43 @@ export class Dashboard extends Component {
                 </ul>
               </li> */}
               <li class="header">ACCOUNT ACTIONS</li>
-              <li id="profile" class=" treeview"><a onClick={()=>{this.change_page("profile")}} style={{cursor:"pointer"}}><i class="fa fa-circle-o text-aqua"></i> <span>Profile</span></a></li>
-              <li id="edit_profile" class=" treeview"><a style={{cursor:"pointer"}} onClick={()=>{this.change_page("edit_profile")}}><i class="fa fa-circle-o text-yellow"></i> <span>Edit Profile</span></a></li>
-              <li id="logout-bottom" class=""><a style={{cursor:"pointer"}} onClick={this.sign_out}><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
+              <li id="profile" class=" treeview"><a onClick={() => { this.change_page("profile") }} style={{ cursor: "pointer" }}><i class="fa fa-circle-o text-aqua"></i> <span>Profile</span></a></li>
+              <li id="edit_profile" class=" treeview"><a style={{ cursor: "pointer" }} onClick={() => { this.change_page("edit_profile") }}><i class="fa fa-circle-o text-yellow"></i> <span>Edit Profile</span></a></li>
+              <li id="logout-bottom" class=""><a style={{ cursor: "pointer" }} onClick={this.sign_out}><i class="fa fa-circle-o text-red"></i> <span>Logout</span></a></li>
             </ul>
 
           </section>
         </aside>
         <div class="content-wrapper">
-          {this.state.page=="dashboard_index" &&
-            <Dashboard_Index/>
+          {this.state.page == "dashboard_index" &&
+            <Dashboard_Index />
           }
-          {this.state.page=="add_workers" &&
+          {this.state.page == "add_workers" &&
             <Add_Workers />
           }
-          {this.state.page=="workers" &&
-            <Workers/>
+          {this.state.page == "workers" &&
+            <Workers />
           }
-          {this.state.page=="add_vaccine" &&
-            <Add_Vaccine changePage={this.change_page}/>
+          {this.state.page == "add_vaccine" &&
+            <Add_Vaccine changePage={this.change_page} />
           }
-          {this.state.page=="vaccines" &&
-            <Vaccines/>
+          {this.state.page == "vaccines" &&
+            <Vaccines />
           }
-          {this.state.page=="profile" &&
-            <Profile changePage={this.change_page}/>
+          {this.state.page == "profile" &&
+            <Profile changePage={this.change_page} />
           }
-          {this.state.page=="edit_profile" &&
-            <Edit_Profile changePage={this.change_page}/>
+          {this.state.page == "edit_profile" &&
+            <Edit_Profile changePage={this.change_page} />
           }
-          {this.state.page=="assigned_vaccines" &&
-            <Assigned_Vaccines changePage={this.change_page}/>
+          {this.state.page == "assigned_vaccines" &&
+            <Assigned_Vaccines changePage={this.change_page} />
           }
-          {this.state.page=="vaccinate" &&
-            <Vaccinate changePage={this.change_page}/>
+          {this.state.page == "vaccinate" &&
+            <Vaccinate changePage={this.change_page} />
           }
-          {this.state.page=="report" &&
-            <Report changePage={this.change_page}/>
+          {this.state.page == "report" &&
+            <Report changePage={this.change_page} />
           }
         </div>
         <footer class="main-footer">
@@ -671,19 +671,19 @@ export class Dashboard extends Component {
     )
   }
 }
-export class Dashboard_Index extends Component{
+export class Dashboard_Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vaccines:"",
-      workers:"",
-      child_record:"",
-      workers_accepted:0,
-      workers_rejected:0,
-      workers_pending:0,
-      vaccines_unassigned:0,
-      vaccines_assigned:0,
-      vaccines_used:0,
+      vaccines: "",
+      workers: "",
+      child_record: "",
+      workers_accepted: 0,
+      workers_rejected: 0,
+      workers_pending: 0,
+      vaccines_unassigned: 0,
+      vaccines_assigned: 0,
+      vaccines_used: 0,
     }
   }
   calculateAge = (dateString) => {
@@ -764,7 +764,7 @@ export class Dashboard_Index extends Component{
     return ageString
   }
   renderMarkers() {
-    
+
     // var longitudes = []
     var structured_child_record = []
     for (var key_ in this.state.child_record) {
@@ -791,11 +791,11 @@ export class Dashboard_Index extends Component{
         childname,
         dateofBirth
       } = child
-      console.log("lon:"+longitude)
-      console.log("lat:"+latitude)
+      console.log("lon:" + longitude)
+      console.log("lat:" + latitude)
       var ageString = this.calculateAge(dateofBirth)
-      return ( 
-        <Marker position={[latitude,longitude]} draggable={true} icon={pointerIcon}>
+      return (
+        <Marker position={[latitude, longitude]} draggable={true} icon={pointerIcon}>
           <Popup>
             {childname} ({ageString})
           </Popup>
@@ -803,36 +803,36 @@ export class Dashboard_Index extends Component{
       )
     })
   }
-  collapse_charts(){
+  collapse_charts() {
     console.log("collapsing")
-    if($("#charts_icon").hasClass("fa-minus")){
+    if ($("#charts_icon").hasClass("fa-minus")) {
       // console.log("class found")
       $("#charts_icon").removeClass("fa-minus")
       $("#charts_icon").addClass("fa-plus")
-    } else{
+    } else {
       $("#charts_icon").removeClass("fa-plus")
       $("#charts_icon").addClass("fa-minus")
     }
-    if($("#charts_box").hasClass("collapsed-box")){
+    if ($("#charts_box").hasClass("collapsed-box")) {
       $("#charts_box").removeClass("collapsed-box")
-    } else{
+    } else {
       $("#charts_box").addClass("collapsed-box")
     }
   }
-  collapse_charts1(){
+  collapse_charts1() {
     console.log("collapsing")
 
-    if($("#charts_icon1").hasClass("fa-minus")){
+    if ($("#charts_icon1").hasClass("fa-minus")) {
       // console.log("class found")
       $("#charts_icon1").removeClass("fa-minus")
       $("#charts_icon1").addClass("fa-plus")
-    } else{
+    } else {
       $("#charts_icon1").removeClass("fa-plus")
       $("#charts_icon1").addClass("fa-minus")
     }
-    if($("#charts_box1").hasClass("collapsed-box")){
+    if ($("#charts_box1").hasClass("collapsed-box")) {
       $("#charts_box1").removeClass("collapsed-box")
-    } else{
+    } else {
       $("#charts_box1").addClass("collapsed-box")
     }
   }
@@ -943,40 +943,40 @@ export class Dashboard_Index extends Component{
       obj["key"] = key_
       structured_child_record.push(obj)
     }
-    return(
+    return (
       <div>
         <section className="content">
           <div class="header">Dashboard</div>
-          {window.localStorage.getItem("role")=="Admin" &&
-          <div id="charts_box" class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Workers And Vaccines Overview</h3>
-              <div onClick={this.collapse_charts} class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i id="charts_icon" class="fa fa-minus"></i>
-                </button>
+          {window.localStorage.getItem("role") == "Admin" &&
+            <div id="charts_box" class="box box-info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Workers And Vaccines Overview</h3>
+                <div onClick={this.collapse_charts} class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i id="charts_icon" class="fa fa-minus"></i>
+                  </button>
+                </div>
               </div>
-            </div>
-            <div class="box-body charts_box">
-              {(this.state.workers_accepted+this.state.workers_rejected+this.state.workers_pending)!=0 &&
-              <Doughnut
-              x1={this.state.workers_accepted}
-              x1_title="Accepted"
-              x2={this.state.workers_rejected}
-              x2_title="Rejected"
-              x3={this.state.workers_pending}
-              x3_title="Pending"
-              title="Workers"/>}
-              {(this.state.vaccines_assigned+this.state.vaccines_unassigned+this.state.vaccines_used)!=0 &&
-              <Doughnut
-              x1={this.state.vaccines_used}
-              x1_title="Used"
-              x2={this.state.vaccines_assigned}
-              x2_title="Assigned"
-              x3={this.state.vaccines_unassigned}
-              x3_title="Unassigned"
-              title="Vaccines"/>}
-            </div>
-          </div>}
+              <div class="box-body charts_box">
+                {(this.state.workers_accepted + this.state.workers_rejected + this.state.workers_pending) != 0 &&
+                  <Doughnut
+                    x1={this.state.workers_accepted}
+                    x1_title="Accepted"
+                    x2={this.state.workers_rejected}
+                    x2_title="Rejected"
+                    x3={this.state.workers_pending}
+                    x3_title="Pending"
+                    title="Workers" />}
+                {(this.state.vaccines_assigned + this.state.vaccines_unassigned + this.state.vaccines_used) != 0 &&
+                  <Doughnut
+                    x1={this.state.vaccines_used}
+                    x1_title="Used"
+                    x2={this.state.vaccines_assigned}
+                    x2_title="Assigned"
+                    x3={this.state.vaccines_unassigned}
+                    x3_title="Unassigned"
+                    title="Vaccines" />}
+              </div>
+            </div>}
           <div id="charts_box1" class="box box-info" >
             <div class="box-header with-border">
               <h3 class="box-title">Locations of Vaccinated Children</h3>
@@ -987,15 +987,15 @@ export class Dashboard_Index extends Component{
             </div>
             <div class="box-body map_box_" >
               {/* FOR GOOGLE MAPS */}
-            {/* <div id="google_map">
+              {/* <div id="google_map">
               <MapContainer child_record={structured_child_record} /> 
             </div> */}
-            {/* FOR OPEN STREET MAPS */}
-            <Map className="map" center={[33.766,72.361]} zoom={13}>
-              <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              {this.renderMarkers()}
-            </Map>
+              {/* FOR OPEN STREET MAPS */}
+              <Map className="map" center={[33.766, 72.361]} zoom={13}>
+                <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {this.renderMarkers()}
+              </Map>
             </div>
           </div>
         </section>
@@ -1003,20 +1003,20 @@ export class Dashboard_Index extends Component{
     )
   }
 }
-export class Add_Workers extends Component{
+export class Add_Workers extends Component {
   constructor(props) {
     super(props);
     this.state = {
       workers: "",
-      vaccines:"",
-      worker_vaccine:"",
+      vaccines: "",
+      worker_vaccine: "",
     };
   }
-  reject_worker = (status, email, index, key, password,cnic) => {
+  reject_worker = (status, email, index, key, password, cnic) => {
     console.log("rejecting..")
-    $("#reject-btn-"+cnic).addClass("disabled-li")
-    if(!$("#accept-btn-"+cnic).hasClass("disabled-li")){
-      $("#accept-btn-"+cnic).addClass("disabled-li")
+    $("#reject-btn-" + cnic).addClass("disabled-li")
+    if (!$("#accept-btn-" + cnic).hasClass("disabled-li")) {
+      $("#accept-btn-" + cnic).addClass("disabled-li")
     }
     $("#logout-top").addClass("disabled-li")
     $("#logout-bottom").addClass("disabled-li")
@@ -1030,12 +1030,12 @@ export class Add_Workers extends Component{
     })
     if (status == "Accepted") {
       console.log("was accepted..")
-      firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
+      firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
         console.log("signing..")
       }).catch(function (error) {
         console.log(error.code)
         console.log(error.message)
-      }).then(function(){
+      }).then(function () {
         var user = firebase.auth().currentUser
         return user
       }).then(function (user) {
@@ -1066,7 +1066,7 @@ export class Add_Workers extends Component{
       //   structured_vaccines.push(obj)
       // }
 
-      var structured_worker_vaccine=[]
+      var structured_worker_vaccine = []
       for (var key_ in this.state.worker_vaccine) {
         // skip loop if the property is from prototype
         if (!this.state.worker_vaccine.hasOwnProperty(key_)) continue;
@@ -1097,11 +1097,11 @@ export class Add_Workers extends Component{
       $("#logout-bottom").removeClass("disabled-li")
     }
   }
-  accept_worker = (status, email, index, key, password,cnic) => {
-    if(!$("#reject-btn-"+cnic).hasClass("disabled-li")){
-      $("#reject-btn-"+cnic).addClass("disabled-li")
+  accept_worker = (status, email, index, key, password, cnic) => {
+    if (!$("#reject-btn-" + cnic).hasClass("disabled-li")) {
+      $("#reject-btn-" + cnic).addClass("disabled-li")
     }
-    $("#accept-btn-"+cnic).addClass("disabled-li")
+    $("#accept-btn-" + cnic).addClass("disabled-li")
     $("#logout-top").addClass("disabled-li")
     $("#logout-bottom").addClass("disabled-li")
     var update = {}
@@ -1129,218 +1129,60 @@ export class Add_Workers extends Component{
       $("#logout-bottom").removeClass("disabled-li")
     }
   }
-  renderTdStatus(status){
+  renderTdStatus(status) {
     if (status == "In Progress") {
-      return(<td><span class='label label-warning'>Pending</span></td>)
+      return (<td><span class='label label-warning'>Pending</span></td>)
     } else if (status == "Accepted") {
-      return(<td><span class='label label-success'>Accepted</span></td>)
+      return (<td><span class='label label-success'>Accepted</span></td>)
     } else if (status == "Rejected") {
-      return(<td><span class='label label-danger'>Rejected</span></td>)
+      return (<td><span class='label label-danger'>Rejected</span></td>)
     }
   }
-  renderAcceptBtn(status,email,index,key,password,cnic){
-    if (status == "In Progress"||status == "Rejected") {
-      return(<td><button id={"accept-btn-"+cnic} onClick={()=>{this.accept_worker(status,email,index,key,password,cnic)}} class='btn btn-success'>Accept</button></td>)
+  renderAcceptBtn(status, email, index, key, password, cnic) {
+    if (status == "In Progress" || status == "Rejected") {
+      return (<td><button id={"accept-btn-" + cnic} onClick={() => { this.accept_worker(status, email, index, key, password, cnic) }} class='btn btn-success'>Accept</button></td>)
     } else if (status == "Accepted") {
-      return(<td><button id={"accept-btn-"+cnic} disabled={true} onClick={()=>{this.accept_worker(status,email,index,key,password,cnic)}} class='btn btn-success'>Accept</button></td>)
+      return (<td><button id={"accept-btn-" + cnic} disabled={true} onClick={() => { this.accept_worker(status, email, index, key, password, cnic) }} class='btn btn-success'>Accept</button></td>)
     }
   }
-  renderRejectBtn(status,email,index,key,password,cnic){
-    if (status == "In Progress"||status == "Accepted") {
-      return(<td><button id={"reject-btn-"+cnic} onClick={()=>{this.reject_worker(status,email,index,key,password,cnic)}} class='btn btn-danger'>Reject</button></td>)
+  renderRejectBtn(status, email, index, key, password, cnic) {
+    if (status == "In Progress" || status == "Accepted") {
+      return (<td><button id={"reject-btn-" + cnic} onClick={() => { this.reject_worker(status, email, index, key, password, cnic) }} class='btn btn-danger'>Reject</button></td>)
     } else if (status == "Rejected") {
-      return(<td><button id={"reject-btn-"+cnic} disabled={true} onClick={()=>{this.reject_worker(status,email,index,key,password,cnic)}} class='btn btn-danger'>Reject</button></td>)
+      return (<td><button id={"reject-btn-" + cnic} disabled={true} onClick={() => { this.reject_worker(status, email, index, key, password, cnic) }} class='btn btn-danger'>Reject</button></td>)
     }
   }
-  renderTableData(){
-    var structured_workers=[];
+  renderTableData() {
+    var structured_workers = [];
     for (var key in this.state.workers) {
       // skip loop if the property is from prototype
       if (!this.state.workers.hasOwnProperty(key)) continue;
       var obj = this.state.workers[key];
       // console.log(key)
-      obj["key"]=key
+      obj["key"] = key
       structured_workers.push(obj)
     }
     console.log(structured_workers)
-    if(structured_workers.length==0){
+    if (structured_workers.length == 0) {
       return <td colSpan={6}><h3 class="no_data">There are no workers signed up yet</h3></td>
-    } else{
+    } else {
       return structured_workers.map((worker, index) => {
-        const { cnic, email, gender,name, psw,phone_no,repeat_pass,role,status,key } = worker //destructuring
+        const { cnic, email, gender, name, psw, phone_no, repeat_pass, role, status, key } = worker //destructuring
         // console.log(psw)
         // console.log(repeat_pass)
         // console.log(worker.password)
         // console.log(name)
         return (
-           <tr key={index}>
-              <td>{cnic}</td>
-              <td>{name}</td>
-              <td>{email}</td>
-              {this.renderTdStatus(status)}
-              {this.renderAcceptBtn(status,email,index,key,worker.password,cnic)}
-              {this.renderRejectBtn(status,email,index,key,worker.password,cnic)}
-           </tr>
+          <tr key={index}>
+            <td>{cnic}</td>
+            <td>{name}</td>
+            <td>{email}</td>
+            {this.renderTdStatus(status)}
+            {this.renderAcceptBtn(status, email, index, key, worker.password, cnic)}
+            {this.renderRejectBtn(status, email, index, key, worker.password, cnic)}
+          </tr>
         )
-     })
-    }
-  }
-  componentDidMount() {
-      var get_workers = firebase.database().ref('WORKER');
-      get_workers.on('value', (snapshot) => {
-        this.setState({
-          workers: snapshot.val()
-        })
       })
-      var get_vaccines = firebase.database().ref('VACCINE');
-      get_vaccines.on('value', (snapshot) => {
-        this.setState({
-          vaccines: snapshot.val()
-        })
-      })
-      var get_worker_vaccine = firebase.database().ref('WORKER_VACCINE');
-      get_worker_vaccine.on('value', (snapshot) => {
-        this.setState({
-          worker_vaccine: snapshot.val()
-        })
-      })
-  }
-  componentWillMount() {
-  }
-  render(){
-    console.log(this.state)
-    return(
-      <div>
-        <section className="content">
-        <div class="header">Add Workers</div>
-              <table class="table table-responsive" border="1">
-                <tr>
-                  <th>CNIC</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Accept</th>
-                  <th>Reject</th>
-                </tr>
-                {this.renderTableData()}
-              </table>
-        </section>
-      </div>
-    )
-  }
-}
-export class Workers extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      workers: "",
-      worker_vaccine:"",
-      vaccines:"",
-    };
-  }
-  getWorkDone(vaccines_used,vaccines_assigned){
-    var work_done=(vaccines_used/(vaccines_used+vaccines_assigned))*100
-    // var work_done=12.324
-    work_done=work_done.toFixed(0)
-    // console.log(work_done)
-    if(!isNaN(work_done)){
-      return work_done
-    }
-    return 100
-  }
-  renderWorkers(){
-    var structured_workers=[];
-    for (var key in this.state.workers) {
-      // skip loop if the property is from prototype
-      if (!this.state.workers.hasOwnProperty(key)) continue;
-      var obj = this.state.workers[key];
-      // console.log(key)
-      obj["key"]=key
-      structured_workers.push(obj)
-    }
-    var structured_workers = structured_workers.filter(obj => {
-      return obj.status === "Accepted"
-    })
-    if(structured_workers.length==0){
-      return <div style={{textAlign:"center"}}><h3 class="text-centered">There are no workers accepted yet</h3></div>
-    } else{
-      return structured_workers.map((worker, index) => {
-        const { cnic, email, gender,name, psw,phone_no,repeat_pass,role,status,key_ } = worker //destructuring
-
-        var vaccines_assigned=0;
-        var structured_worker_vaccine = [];
-        for (var key in this.state.worker_vaccine) {
-          // skip loop if the property is from prototype
-          if (!this.state.worker_vaccine.hasOwnProperty(key)) continue;
-          var obj = this.state.worker_vaccine[key];
-          // console.log(key)
-          obj["key"] = key
-          structured_worker_vaccine.push(obj)
-        }
-        var structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
-          return obj.worker_cnic === cnic
-        })
-        vaccines_assigned=structured_worker_vaccine.length
-
-        var vaccines_used=0;
-        var structured_vaccines = [];
-        for (var key in this.state.vaccines) {
-          // skip loop if the property is from prototype
-          if (!this.state.vaccines.hasOwnProperty(key)) continue;
-          var obj = this.state.vaccines[key];
-          // console.log(key)
-          obj["key"] = key
-          structured_vaccines.push(obj)
-        }
-        structured_worker_vaccine.forEach(element => {
-          var structured_vaccines_extracted = structured_vaccines.filter(obj => {
-            return obj.key === element.vaccine_id
-          })
-          if(structured_vaccines_extracted[0]!=undefined){
-            if(structured_vaccines_extracted[0].status.includes("used"))
-              vaccines_used++
-          }
-        });
-        // console.log(vaccines_used)
-        vaccines_assigned=vaccines_assigned-vaccines_used
-        var work_done=this.getWorkDone(vaccines_used,vaccines_assigned)
-        // console.log(work_done.toString())
-        console.log(male_pic)
-        console.log(female_pic)
-        console.log(profile_pic)
-        console.log(gender)
-        return (
-          <div class="col-md-4">
-            <div class="box box-widget widget-user-2">
-              <div class="widget-user-header bg-yellow">
-                <div class="widget-user-image">
-                  {gender=="Male" &&
-                  <img class="img-circle" src={male_pic} alt="User Avatar" />}
-                  {gender=="Female" &&
-                  <img class="img-circle" src={female_pic} alt="User Avatar" />}
-                </div>
-                <h3 class="widget-user-username worker_card_name">{name}</h3>
-                <h6 class="widget-user-desc worker_card_email">{email}</h6>
-              </div>
-              <div class="box-footer no-padding">
-                <ul class="nav nav-stacked">
-                  <li><a href="#">Level <span class="pull-right badge bg-blue">{vaccines_used}</span></a></li>
-                  <li><a href="#">Vaccines <span class="pull-right badge bg-aqua">{vaccines_assigned}</span></a></li>
-                  <li>
-                    <a href="#">
-                      <span class="work_done">Work Done</span><span class="pull-right badge bg-green">{work_done}%</span>
-                      <div class="progress progress-xs progress-striped active work_done_bar">
-                        <div class="progress-bar progress-bar-success" style={{ width: work_done.toString().concat("%") }}></div>
-                      </div>
-                    </a>
-
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )
-     })
     }
   }
   componentDidMount() {
@@ -1363,9 +1205,167 @@ export class Workers extends Component{
       })
     })
   }
-  render(){
+  componentWillMount() {
+  }
+  render() {
+    console.log(this.state)
+    return (
+      <div>
+        <section className="content">
+          <div class="header">Add Workers</div>
+          <table class="table table-responsive" border="1">
+            <tr>
+              <th>CNIC</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Accept</th>
+              <th>Reject</th>
+            </tr>
+            {this.renderTableData()}
+          </table>
+        </section>
+      </div>
+    )
+  }
+}
+export class Workers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      workers: "",
+      worker_vaccine: "",
+      vaccines: "",
+    };
+  }
+  getWorkDone(vaccines_used, vaccines_assigned) {
+    var work_done = (vaccines_used / (vaccines_used + vaccines_assigned)) * 100
+    // var work_done=12.324
+    work_done = work_done.toFixed(0)
+    // console.log(work_done)
+    if (!isNaN(work_done)) {
+      return work_done
+    }
+    return 100
+  }
+  renderWorkers() {
+    var structured_workers = [];
+    for (var key in this.state.workers) {
+      // skip loop if the property is from prototype
+      if (!this.state.workers.hasOwnProperty(key)) continue;
+      var obj = this.state.workers[key];
+      // console.log(key)
+      obj["key"] = key
+      structured_workers.push(obj)
+    }
+    var structured_workers = structured_workers.filter(obj => {
+      return obj.status === "Accepted"
+    })
+    if (structured_workers.length == 0) {
+      return <div style={{ textAlign: "center" }}><h3 class="text-centered">There are no workers accepted yet</h3></div>
+    } else {
+      return structured_workers.map((worker, index) => {
+        const { cnic, email, gender, name, psw, phone_no, repeat_pass, role, status, key_ } = worker //destructuring
+
+        var vaccines_assigned = 0;
+        var structured_worker_vaccine = [];
+        for (var key in this.state.worker_vaccine) {
+          // skip loop if the property is from prototype
+          if (!this.state.worker_vaccine.hasOwnProperty(key)) continue;
+          var obj = this.state.worker_vaccine[key];
+          // console.log(key)
+          obj["key"] = key
+          structured_worker_vaccine.push(obj)
+        }
+        var structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
+          return obj.worker_cnic === cnic
+        })
+        vaccines_assigned = structured_worker_vaccine.length
+
+        var vaccines_used = 0;
+        var structured_vaccines = [];
+        for (var key in this.state.vaccines) {
+          // skip loop if the property is from prototype
+          if (!this.state.vaccines.hasOwnProperty(key)) continue;
+          var obj = this.state.vaccines[key];
+          // console.log(key)
+          obj["key"] = key
+          structured_vaccines.push(obj)
+        }
+        structured_worker_vaccine.forEach(element => {
+          var structured_vaccines_extracted = structured_vaccines.filter(obj => {
+            return obj.key === element.vaccine_id
+          })
+          if (structured_vaccines_extracted[0] != undefined) {
+            if (structured_vaccines_extracted[0].status.includes("used"))
+              vaccines_used++
+          }
+        });
+        // console.log(vaccines_used)
+        vaccines_assigned = vaccines_assigned - vaccines_used
+        var work_done = this.getWorkDone(vaccines_used, vaccines_assigned)
+        // console.log(work_done.toString())
+        console.log(male_pic)
+        console.log(female_pic)
+        console.log(profile_pic)
+        console.log(gender)
+        return (
+          <div class="col-md-4">
+            <div class="box box-widget widget-user-2">
+              <div class="widget-user-header bg-yellow">
+                <div class="widget-user-image">
+                  {gender == "Male" &&
+                    <img class="img-circle" src={male_pic} alt="User Avatar" />}
+                  {gender == "Female" &&
+                    <img class="img-circle" src={female_pic} alt="User Avatar" />}
+                </div>
+                <h3 class="widget-user-username worker_card_name">{name}</h3>
+                <h6 class="widget-user-desc worker_card_email">{email}</h6>
+              </div>
+              <div class="box-footer no-padding">
+                <ul class="nav nav-stacked">
+                  <li><a href="#">Level <span class="pull-right badge bg-blue">{vaccines_used}</span></a></li>
+                  <li><a href="#">Vaccines <span class="pull-right badge bg-aqua">{vaccines_assigned}</span></a></li>
+                  <li>
+                    <a href="#">
+                      <span class="work_done">Work Done</span><span class="pull-right badge bg-green">{work_done}%</span>
+                      <div class="progress progress-xs progress-striped active work_done_bar">
+                        <div class="progress-bar progress-bar-success" style={{ width: work_done.toString().concat("%") }}></div>
+                      </div>
+                    </a>
+
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )
+      })
+    }
+  }
+  componentDidMount() {
+    var get_workers = firebase.database().ref('WORKER');
+    get_workers.on('value', (snapshot) => {
+      this.setState({
+        workers: snapshot.val()
+      })
+    })
+    var get_vaccines = firebase.database().ref('VACCINE');
+    get_vaccines.on('value', (snapshot) => {
+      this.setState({
+        vaccines: snapshot.val()
+      })
+    })
+    var get_worker_vaccine = firebase.database().ref('WORKER_VACCINE');
+    get_worker_vaccine.on('value', (snapshot) => {
+      this.setState({
+        worker_vaccine: snapshot.val()
+      })
+    })
+  }
+  render() {
     // console.log(this.state)
-    return(
+    return (
       <section class="content">
         <div class="header"> Workers</div>
         <div class="row">
@@ -1375,58 +1375,58 @@ export class Workers extends Component{
     )
   }
 }
-export class Add_Vaccine extends Component{
+export class Add_Vaccine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      vaccine_name:"",
-      company_name:"",
-      vaccine_type:"ipv",
-      vaccine_quality:"low",
+      vaccine_name: "",
+      company_name: "",
+      vaccine_type: "ipv",
+      vaccine_quality: "low",
     };
   }
-  add_vaccine=()=>{
-    if ($(".add_vaccine_vaccine_name").html() == "..." && $(".add_vaccine_company_name").html() == "..."){
-        console.log("adding vaccine")
-        var database = firebase.database().ref("VACCINE");
-        var vaccine_id = Math.random().toString(36).substring(7);
-        database.child(vaccine_id).set({
-        vaccine_name:this.state.vaccine_name,
-        company_name:this.state.company_name,
-        vaccine_type:this.state.vaccine_type,
-        vaccine_quality:this.state.vaccine_quality,
-        status:"unassigned",
-        vaccine_id:vaccine_id,
+  add_vaccine = () => {
+    if ($(".add_vaccine_vaccine_name").html() == "..." && $(".add_vaccine_company_name").html() == "...") {
+      console.log("adding vaccine")
+      var database = firebase.database().ref("VACCINE");
+      var vaccine_id = Math.random().toString(36).substring(7);
+      database.child(vaccine_id).set({
+        vaccine_name: this.state.vaccine_name,
+        company_name: this.state.company_name,
+        vaccine_type: this.state.vaccine_type,
+        vaccine_quality: this.state.vaccine_quality,
+        status: "unassigned",
+        vaccine_id: vaccine_id,
       })
       this.props.changePage("vaccines")
     }
   }
-  vaccine_name_changed=(name)=>{
+  vaccine_name_changed = (name) => {
     console.log(name)
     this.setState({ vaccine_name: name })
-    if(name.length==0){
+    if (name.length == 0) {
       $(".add_vaccine_vaccine_name").html("Enter Vaccine Name")
       $(".add_vaccine_vaccine_name").css("visibility", "visible");
-    } else{
+    } else {
       $(".add_vaccine_vaccine_name").html("...")
       $(".add_vaccine_vaccine_name").css("visibility", "hidden");
     }
   }
 
-  company_name_changed=(name)=>{
+  company_name_changed = (name) => {
     console.log(name)
     this.setState({ company_name: name })
-    if(name.length==0){
+    if (name.length == 0) {
       $(".add_vaccine_company_name").html("Enter company Name")
       $(".add_vaccine_company_name").css("visibility", "visible");
-    } else{
+    } else {
       $(".add_vaccine_company_name").html("...")
       $(".add_vaccine_company_name").css("visibility", "hidden");
     }
   }
-  render(){
+  render() {
     // console.log(this.state)
-    return(
+    return (
       <div>
         <section className="content">
           <div class="header">Add Vaccine</div>
@@ -1438,12 +1438,12 @@ export class Add_Vaccine extends Component{
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Vaccine Name</label>
-                  <input onChange={(event)=>{this.vaccine_name_changed(event.target.value)}} type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter vaccine name" />
+                  <input onChange={(event) => { this.vaccine_name_changed(event.target.value) }} type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter vaccine name" />
                   <span class="add_vaccine_vaccine_name validation_msg">Enter Vaccine name</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Company Name</label>
-                  <input onChange={(event)=>{this.company_name_changed(event.target.value)}} type="email" class="form-control" id="exampleInputPassword1"
+                  <input onChange={(event) => { this.company_name_changed(event.target.value) }} type="email" class="form-control" id="exampleInputPassword1"
                     placeholder="Enter Company Name" />
                   <span class="add_vaccine_company_name validation_msg">Enter Company name</span>
                 </div>
@@ -1464,7 +1464,7 @@ export class Add_Vaccine extends Component{
                 </div>
               </div>
               <div class="box-footer">
-                <button  onClick={this.add_vaccine} type="submit" class="btn btn-primary">Add Vaccine</button>
+                <button onClick={this.add_vaccine} type="submit" class="btn btn-primary">Add Vaccine</button>
               </div>
             </div>
           </div>
@@ -1473,48 +1473,48 @@ export class Add_Vaccine extends Component{
     )
   }
 }
-export class Vaccines extends Component{ 
+export class Vaccines extends Component {
   constructor(props) {
     super(props);
     this.state = {
       vaccines: "",
-      workers:"",
-      worker_vaccine:"",
+      workers: "",
+      worker_vaccine: "",
     };
   }
-  assign_vaccine=(key)=>{
+  assign_vaccine = (key) => {
     console.log("assigning vaccine")
-    $("#btn-"+key).attr("disabled", true)
+    $("#btn-" + key).attr("disabled", true)
     var worker_vaccine = firebase.database().ref("WORKER_VACCINE")
     worker_vaccine.push().set({
       worker_cnic: $("#" + key).val(),
       vaccine_id: key
-    }).then(()=>{
+    }).then(() => {
       var update = {}
-      update["VACCINE/" + key + "/status"] = "assigned".concat("-",$("#" + key).val())
+      update["VACCINE/" + key + "/status"] = "assigned".concat("-", $("#" + key).val())
       firebase.database().ref().update(update)
       var temp_vaccines = this.state.vaccines
-      temp_vaccines[key].status = "assigned".concat("-",$("#" + key).val())
+      temp_vaccines[key].status = "assigned".concat("-", $("#" + key).val())
       this.setState({
         vaccines: temp_vaccines
       })
     })
   }
-  renderSelectData(){
-    var structured_workers=[];
+  renderSelectData() {
+    var structured_workers = [];
     for (var key in this.state.workers) {
       // skip loop if the property is from prototype
       if (!this.state.workers.hasOwnProperty(key)) continue;
       var obj = this.state.workers[key];
       // console.log(key)
-      obj["key"]=key
+      obj["key"] = key
       structured_workers.push(obj)
     }
     structured_workers = structured_workers.filter(obj => {
       return obj.status === "Accepted"
     })
     return structured_workers.map((worker, index) => {
-      const { cnic, email, gender,name, psw,phone_no,repeat_pass,role,status,key} = worker //destructuring
+      const { cnic, email, gender, name, psw, phone_no, repeat_pass, role, status, key } = worker //destructuring
       // console.log(psw)
       // console.log(repeat_pass)
       // console.log(worker.password)
@@ -1524,9 +1524,9 @@ export class Vaccines extends Component{
       )
     })
   }
-  renderSelect(status,key_){
-    if(status=="unassigned"){
-      return(
+  renderSelect(status, key_) {
+    if (status == "unassigned") {
+      return (
         <select class="Dropdown-control form-control " id={key_}>
           {this.renderSelectData()}
         </select>
@@ -1560,8 +1560,8 @@ export class Vaccines extends Component{
       structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
         return obj.vaccine_id == key_
       })
-      var worker_name="";
-      if(structured_worker_vaccine[0]!=undefined&&structured_workers[0]!=undefined){
+      var worker_name = "";
+      if (structured_worker_vaccine[0] != undefined && structured_workers[0] != undefined) {
         structured_workers = structured_workers.filter(obj => {
           return obj.cnic === structured_worker_vaccine[0].worker_cnic
         })
@@ -1570,14 +1570,14 @@ export class Vaccines extends Component{
           worker_name = structured_workers[0].name
         }
       }
-      if(worker_name!=""){
-        return(
+      if (worker_name != "") {
+        return (
           <select disabled={true} class="Dropdown-control form-control ">
             <option selected="selected">{worker_name}</option>
           </select>
         )
-      } else{
-        return(
+      } else {
+        return (
           <select disabled={true} class="Dropdown-control form-control ">
             <option selected="selected">Rejected</option>
           </select>
@@ -1585,37 +1585,37 @@ export class Vaccines extends Component{
       }
     }
   }
-  renderTdStatus(status){
+  renderTdStatus(status) {
     if (status == "unassigned") {
-      return(<td><span class='label label-warning'>Unassigned</span></td>)
+      return (<td><span class='label label-warning'>Unassigned</span></td>)
     } else if (status.includes("used")) {
-      return(<td><span class='label label-success'>Used</span></td>)
+      return (<td><span class='label label-success'>Used</span></td>)
     } else {
-      return(<td><span class='label label-danger'>Assigned</span></td>)
+      return (<td><span class='label label-danger'>Assigned</span></td>)
     }
   }
-  renderAssignBtn(status,key){
+  renderAssignBtn(status, key) {
     if (status == "unassigned") {//>?
-      return(<td><button id={"btn-"+key} ref={btn => { this.btn = btn; }}  onClick={()=>{this.assign_vaccine(key)}} class='btn btn-success'>Assign</button></td>)
+      return (<td><button id={"btn-" + key} ref={btn => { this.btn = btn; }} onClick={() => { this.assign_vaccine(key) }} class='btn btn-success'>Assign</button></td>)
     } else {
-      return(<td><button ref="btn" disabled={true} class='btn btn-success'>Assign</button></td>)
+      return (<td><button ref="btn" disabled={true} class='btn btn-success'>Assign</button></td>)
     }
   }
-  renderTableData(){
-    var structured_vaccines=[];
+  renderTableData() {
+    var structured_vaccines = [];
     for (var key in this.state.vaccines) {
       // skip loop if the property is from prototype
       if (!this.state.vaccines.hasOwnProperty(key)) continue;
       var obj = this.state.vaccines[key];
       // console.log(key)
-      obj["key"]=key
+      obj["key"] = key
       structured_vaccines.push(obj)
     }
     // console.log(structured_vaccines)
     // console.log(key)
-    if(structured_vaccines.length!=0){
+    if (structured_vaccines.length != 0) {
       return structured_vaccines.map((vaccine, index) => {
-        const { company_name, status, vaccine_name,vaccine_quality, vaccine_type,key} = vaccine //destructuring
+        const { company_name, status, vaccine_name, vaccine_quality, vaccine_type, key } = vaccine //destructuring
         // console.log(psw)
         // console.log(repeat_pass)
         // console.log(vaccine.password)
@@ -1628,13 +1628,13 @@ export class Vaccines extends Component{
             <td>{vaccine_quality}</td>
             {this.renderTdStatus(status)}
             <td>
-            {this.renderSelect(status,key)}
+              {this.renderSelect(status, key)}
             </td>
-            {this.renderAssignBtn(status,key)}
+            {this.renderAssignBtn(status, key)}
           </tr>
         )
-     })
-    } else{
+      })
+    } else {
       return <td colSpan={7}><h3 class="no_data">There are no Vaccines</h3></td>
     }
   }
@@ -1658,9 +1658,9 @@ export class Vaccines extends Component{
       })
     })
   }
-  render(){
+  render() {
     // console.log(this.state)
-    return(
+    return (
       <div>
         <section className="content">
           <div class="header">Vaccines</div>
@@ -1681,9 +1681,9 @@ export class Vaccines extends Component{
     )
   }
 }
-export class Profile extends Component{
-  render(){
-    return(
+export class Profile extends Component {
+  render() {
+    return (
       <div>
         <section className="content">
           <div class="header">Profile</div>
@@ -1716,7 +1716,7 @@ export class Profile extends Component{
                   </tr>
                   <tr>
                     <td colSpan={2}>
-                      <button onClick={()=>{this.props.changePage("edit_profile")}} class="btn btn-primary form-control">Edit Profile</button>
+                      <button onClick={() => { this.props.changePage("edit_profile") }} class="btn btn-primary form-control">Edit Profile</button>
                     </td>
                   </tr>
                 </table>
@@ -1728,113 +1728,113 @@ export class Profile extends Component{
     )
   }
 }
-export class Edit_Profile extends Component{
+export class Edit_Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current_user_data:"",
-      edit_bth_disabled:true
+      current_user_data: "",
+      edit_bth_disabled: true
     };
   }
-  phone_no_changed=(phone_no)=>{
+  phone_no_changed = (phone_no) => {
     this.setState({ phone_no: phone_no })
-    if(phone_no.length!=11){
+    if (phone_no.length != 11) {
       $(".edit_phone_no_error").html("The digits could be 11 exact")
       $(".edit_phone_no_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".edit_phone_no_error").html("...")
       $(".edit_phone_no_error").css("visibility", "hidden");
     }
   }
-  password_changed=(password)=>{
+  password_changed = (password) => {
     this.setState({ password: password })
-    if(password.length<8){
+    if (password.length < 8) {
       $(".edit_password_error").html("Min chars could be 8")
       $(".edit_password_error").css("visibility", "visible");
-    } else if(!/[a-z]/.test(password)||!/[A-Z]/.test(password)||!/[0-9]/.test(password)){
+    } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
       $(".edit_password_error").html("There should be a num, lower and upper case letter")
       $(".edit_password_error").css("visibility", "visible");
     }
-    else{
+    else {
       $(".edit_password_error").html("...")
       $(".edit_password_error").css("visibility", "hidden");
     }
-    if(password!=$("#repeat_password").val()){
+    if (password != $("#repeat_password").val()) {
       $(".edit_repeat_password_error").html("Password doesn't match")
       $(".edit_repeat_password_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".edit_repeat_password_error").html("...")
       $(".edit_repeat_password_error").css("visibility", "hidden");
     }
   }
-  repeat_password_changed=(repeat_password)=>{
+  repeat_password_changed = (repeat_password) => {
     this.setState({ repeat_password: repeat_password })
-    if(repeat_password.length<8){
+    if (repeat_password.length < 8) {
       $(".edit_repeat_password_error").html("Min chars could be 8")
       $(".edit_repeat_password_error").css("visibility", "visible");
-    } else if(!/[a-z]/.test(repeat_password)||!/[A-Z]/.test(repeat_password)||!/[0-9]/.test(repeat_password)){
+    } else if (!/[a-z]/.test(repeat_password) || !/[A-Z]/.test(repeat_password) || !/[0-9]/.test(repeat_password)) {
       $(".edit_repeat_password_error").html("There should be a num, lower and upper case letter")
       $(".edit_repeat_password_error").css("visibility", "visible");
-    } else if(repeat_password!=this.state.password){
+    } else if (repeat_password != this.state.password) {
       $(".edit_repeat_password_error").html("Password doesn't match")
       $(".edit_repeat_password_error").css("visibility", "visible");
     }
-    else{
+    else {
       $(".edit_repeat_password_error").html("...")
       $(".edit_repeat_password_error").css("visibility", "hidden");
     }
   }
-  name_changed=(name)=>{
+  name_changed = (name) => {
     this.setState({ name: name })
-    if(name.length>12||name.length<7){
+    if (name.length > 12 || name.length < 7) {
       $(".edit_name_error").html("7-12 chars are allowed")
       $(".edit_name_error").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
+    } else if (!/^[a-zA-Z ]*$/.test(name)) {
       $(".edit_name_error").html("Only alphabets and spaces are allowed")
       $(".edit_name_error").css("visibility", "visible");
-    } else{
+    } else {
       $(".edit_name_error").html("...")
       $(".edit_name_error").css("visibility", "hidden");
     }
   }
 
-  edit_profile=()=>{
+  edit_profile = () => {
     console.log("edit check")
-    if ($(".edit_phone_no_error").html() == "..." && $(".edit_name_error").html() == "..." && $(".edit_repeat_password_error").html() == "..." && $(".edit_password_error").html() == "..."){
+    if ($(".edit_phone_no_error").html() == "..." && $(".edit_name_error").html() == "..." && $(".edit_repeat_password_error").html() == "..." && $(".edit_password_error").html() == "...") {
       console.log("editing")
       var update = {}
-      if(this.state.current_user_data.role=="Admin"){
+      if (this.state.current_user_data.role == "Admin") {
         console.log("admin record")
-        if(this.state.name!=undefined){
+        if (this.state.name != undefined) {
           update["ADMIN/name"] = this.state.name
           window.localStorage.setItem("name", this.state.name)
         }
-        if(this.state.phone_no!=undefined){
+        if (this.state.phone_no != undefined) {
           update["ADMIN/phone_no"] = this.state.phone_no
           window.localStorage.setItem("phone_no", this.state.phone_no)
         }
-        if(this.state.password!=undefined){
+        if (this.state.password != undefined) {
           update["ADMIN/password"] = this.state.password
         }
-        if(this.state.repeat_password!=undefined){
+        if (this.state.repeat_password != undefined) {
           update["ADMIN/repeat_password"] = this.state.repeat_password
         }
 
-      } else{
+      } else {
         console.log("worker record")
-        if(this.state.name!=undefined){
-          update["WORKER/"+window.localStorage.getItem("key")+"/name"] = this.state.name
+        if (this.state.name != undefined) {
+          update["WORKER/" + window.localStorage.getItem("key") + "/name"] = this.state.name
           window.localStorage.setItem("name", this.state.name)
         }
-        if(this.state.phone_no!=undefined){
-          update["WORKER/"+window.localStorage.getItem("key")+"/phone_no"] = this.state.phone_no
+        if (this.state.phone_no != undefined) {
+          update["WORKER/" + window.localStorage.getItem("key") + "/phone_no"] = this.state.phone_no
           window.localStorage.setItem("phone_no", this.state.phone_no)
         }
-        if(this.state.password!=undefined){
-          update["WORKER/"+window.localStorage.getItem("key")+"/password"] = this.state.password
+        if (this.state.password != undefined) {
+          update["WORKER/" + window.localStorage.getItem("key") + "/password"] = this.state.password
         }
-        if(this.state.repeat_password!=undefined){
-          update["WORKER/"+window.localStorage.getItem("key")+"/repeat_password"] = this.state.repeat_password
+        if (this.state.repeat_password != undefined) {
+          update["WORKER/" + window.localStorage.getItem("key") + "/repeat_password"] = this.state.repeat_password
         }
       }
       firebase.database().ref().update(update)
@@ -1842,12 +1842,12 @@ export class Edit_Profile extends Component{
     }
   }
 
-  componentDidMount(){
-    if(window.localStorage.getItem("role")=="Admin"){
+  componentDidMount() {
+    if (window.localStorage.getItem("role") == "Admin") {
       var get_data = firebase.database().ref('ADMIN');
-    } else{
+    } else {
       console.log(window.localStorage.getItem("key"))
-      var get_data = firebase.database().ref("WORKER/"+window.localStorage.getItem("key"));
+      var get_data = firebase.database().ref("WORKER/" + window.localStorage.getItem("key"));
     }
     console.log(get_data)
     get_data.on('value', (snapshot) => {
@@ -1856,15 +1856,15 @@ export class Edit_Profile extends Component{
       })
       console.log("enabeling edit btn")
       this.setState({
-        edit_bth_disabled:false
+        edit_bth_disabled: false
       })
       // $("#edit_btn").prop("disabled",false)
 
     })
   }
-  render(){
+  render() {
     console.log(this.state)
-    return(
+    return (
       <div>
         <section className="content">
           <div class="header">Edit Profile</div>
@@ -1876,38 +1876,38 @@ export class Edit_Profile extends Component{
               <div class="box-body">
                 <div class="form-group edit_profile_form_group">
                   <label for="exampleInputEmail1">Name</label>
-                  <input onChange={(event) => { this.name_changed(event.target.value) }} type="text" class="form-control" id="exampleInputEmail1" defaultValue={this.state.current_user_data.name}/>
+                  <input onChange={(event) => { this.name_changed(event.target.value) }} type="text" class="form-control" id="exampleInputEmail1" defaultValue={this.state.current_user_data.name} />
                   <span class="help_block edit_name_error validation_msg">...</span>
                 </div>
                 <div class="form-group edit_profile_form_group">
                   <label for="exampleInputEmail1">Phone</label>
-                  <input onChange={(event) => { this.phone_no_changed(event.target.value) }} type="number" class="form-control" id="exampleInputEmail1" defaultValue={this.state.current_user_data.phone_no}/>
+                  <input onChange={(event) => { this.phone_no_changed(event.target.value) }} type="number" class="form-control" id="exampleInputEmail1" defaultValue={this.state.current_user_data.phone_no} />
                   <span class="help_block edit_phone_no_error validation_msg">...</span>
                 </div>
-                {window.localStorage.getItem("role")=="Admin" &&
-                <div class="form-group edit_profile_form_group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input onChange={(event) => { this.password_changed(event.target.value)}} type="password" class="form-control" id="exampleInputPassword1" defaultValue={this.state.current_user_data.password}/>
-                  <span class="help_block edit_password_error validation_msg">...</span>
-                </div>}
-                {window.localStorage.getItem("role")=="Admin" &&
-                <div class="form-group edit_profile_form_group">
-                  <label for="exampleInputPassword1">Confirm Password</label>
-                  <input onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="form-control" id="repeat_password" defaultValue={this.state.current_user_data.password}/>
-                  <span class="help_block edit_repeat_password_error validation_msg">...</span>
-                </div>}
-                {window.localStorage.getItem("role")=="Worker" &&
-                <div class="form-group edit_profile_form_group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input readOnly={true} onChange={(event) => { this.password_changed(event.target.value)}} type="password" class="form-control" id="exampleInputPassword1" defaultValue={this.state.current_user_data.password}/>
-                  <span class="help_block edit_password_error validation_msg">...</span>
-                </div>}
-                {window.localStorage.getItem("role")=="Worker" &&
-                <div class="form-group edit_profile_form_group">
-                  <label for="exampleInputPassword1">Confirm Password</label>
-                  <input readOnly={true} onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="form-control" id="repeat_password" defaultValue={this.state.current_user_data.password}/>
-                  <span class="help_block edit_repeat_password_error validation_msg">...</span>
-                </div>}
+                {/* {window.localStorage.getItem("role") == "Admin" &&
+                  <div class="form-group edit_profile_form_group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input hidden={true} onChange={(event) => { this.password_changed(event.target.value) }} type="password" class="form-control" id="exampleInputPassword1" defaultValue={this.state.current_user_data.password} />
+                    <span class="help_block edit_password_error validation_msg">...</span>
+                  </div>}
+                {window.localStorage.getItem("role") == "Admin" &&
+                  <div class="form-group edit_profile_form_group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input hidden={true} onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="form-control" id="repeat_password" defaultValue={this.state.current_user_data.password} />
+                    <span class="help_block edit_repeat_password_error validation_msg">...</span>
+                  </div>}
+                {window.localStorage.getItem("role") == "Worker" &&
+                  <div class="form-group edit_profile_form_group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input hidden={true} readOnly={true} onChange={(event) => { this.password_changed(event.target.value) }} type="password" class="form-control" id="exampleInputPassword1" defaultValue={this.state.current_user_data.password} />
+                    <span class="help_block edit_password_error validation_msg">...</span>
+                  </div>}
+                {window.localStorage.getItem("role") == "Worker" &&
+                  <div class="form-group edit_profile_form_group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input hidden={true} readOnly={true} onChange={(event) => { this.repeat_password_changed(event.target.value) }} type="password" class="form-control" id="repeat_password" defaultValue={this.state.current_user_data.password} />
+                    <span class="help_block edit_repeat_password_error validation_msg">...</span>
+                  </div>} */}
               </div>
               <div class="box-footer">
                 <button id="edit_btn" disabled={this.state.edit_bth_disabled} onClick={this.edit_profile} type="submit" class="btn btn-primary">Edit Profile</button>
@@ -1915,11 +1915,11 @@ export class Edit_Profile extends Component{
             </div>
           </div>
         </section>
-        </div>
+      </div>
     )
   }
 }
-export class Assigned_Vaccines extends Component{
+export class Assigned_Vaccines extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1928,16 +1928,16 @@ export class Assigned_Vaccines extends Component{
       vaccines: "",
     };
   }
-  renderTdStatus(status){
+  renderTdStatus(status) {
     if (status == "unassigned") {
-      return(<td><span class='label label-warning'>Unassigned</span></td>)
+      return (<td><span class='label label-warning'>Unassigned</span></td>)
     } else if (status.includes("used")) {
-      return(<td><span class='label label-success'>Used</span></td>)
+      return (<td><span class='label label-success'>Used</span></td>)
     } else {
-      return(<td><span class='label label-danger'>Assigned</span></td>)
+      return (<td><span class='label label-danger'>Assigned</span></td>)
     }
   }
-  renderTableData(){
+  renderTableData() {
     var vaccines_assigned_count = 0;
     var vaccines_assigned = [];
     var structured_worker_vaccine = [];
@@ -1970,7 +1970,7 @@ export class Assigned_Vaccines extends Component{
       var structured_vaccines_extracted = structured_vaccines.filter(obj => {
         return obj.key === element.vaccine_id
       })
-      if(structured_vaccines_extracted[0]!=undefined){
+      if (structured_vaccines_extracted[0] != undefined) {
         vaccines_assigned.push(structured_vaccines_extracted[0])
       }
 
@@ -1978,22 +1978,22 @@ export class Assigned_Vaccines extends Component{
     });
     console.log("Assigned=" + vaccines_assigned_count)
     console.log(vaccines_assigned)
-    if(vaccines_assigned.length==0){
+    if (vaccines_assigned.length == 0) {
       return <td colSpan={6}><h3 class="no_data">There are no Vaccines assiged to you</h3></td>
-    } else{
+    } else {
       return vaccines_assigned.map((vaccine, index) => {
-        const { company_name, key, status,vaccine_name, vaccine_quality,vaccine_type } = vaccine //destructuring
+        const { company_name, key, status, vaccine_name, vaccine_quality, vaccine_type } = vaccine //destructuring
         return (
-           <tr key={index}>
-              <td>{key}</td>
-              <td>{vaccine_name}</td>
-              <td>{company_name}</td>
-              <td>{vaccine_type}</td>
-              <td>{vaccine_quality}</td>
-              {this.renderTdStatus(status)}
-           </tr>
+          <tr key={index}>
+            <td>{key}</td>
+            <td>{vaccine_name}</td>
+            <td>{company_name}</td>
+            <td>{vaccine_type}</td>
+            <td>{vaccine_quality}</td>
+            {this.renderTdStatus(status)}
+          </tr>
         )
-     })
+      })
     }
   }
   componentDidMount() {
@@ -2016,8 +2016,8 @@ export class Assigned_Vaccines extends Component{
       })
     })
   }
-  render(){
-    return(
+  render() {
+    return (
       <div>
         <section className="content">
           <div class="header">Assigned Vaccines</div>
@@ -2037,7 +2037,7 @@ export class Assigned_Vaccines extends Component{
     )
   }
 }
-export class Vaccinate extends Component{
+export class Vaccinate extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -2045,185 +2045,185 @@ export class Vaccinate extends Component{
       worker_vaccine: "",
       vaccines: "",
       //For Vaccination or Child
-      phonenumber:"",
-      mothername:"",
-      longitude:"",
-      latitude:"",
-      fathername:"",
-      email:"",
-      dateofBirth:"",
-      cnic:"",
-      childname:"",
-      childgender:"Boy",
-      bForm:"",
-      address:"",
-      vaccine_id:"",
-      vaccine_name:"",
-      company_name:"",
-      vaccine_quality:"",
-      vaccine_type:"",
-      vaccination_date:""
+      phonenumber: "",
+      mothername: "",
+      longitude: "",
+      latitude: "",
+      fathername: "",
+      email: "",
+      dateofBirth: "",
+      cnic: "",
+      childname: "",
+      childgender: "Boy",
+      bForm: "",
+      address: "",
+      vaccine_id: "",
+      vaccine_name: "",
+      company_name: "",
+      vaccine_quality: "",
+      vaccine_type: "",
+      vaccination_date: ""
     };
   }
-  renderVaccineName=(vaccines_assigned_and_not_used)=>{
-    var vaccine_name=""
+  renderVaccineName = (vaccines_assigned_and_not_used) => {
+    var vaccine_name = ""
     var vaccines_assigned_and_not_used = vaccines_assigned_and_not_used.filter(obj => {
       return obj.key === this.state.vaccine_id
     })
-    if(this.state.vaccine_id!="" && vaccines_assigned_and_not_used[0]!=undefined){
-      vaccine_name=vaccines_assigned_and_not_used[0].vaccine_name
-      if(this.state.vaccine_name!=vaccine_name){
-        this.setState({vaccine_name:vaccine_name})
+    if (this.state.vaccine_id != "" && vaccines_assigned_and_not_used[0] != undefined) {
+      vaccine_name = vaccines_assigned_and_not_used[0].vaccine_name
+      if (this.state.vaccine_name != vaccine_name) {
+        this.setState({ vaccine_name: vaccine_name })
       }
     }
     return (
       <input readOnly={true} class="form-control" defaultValue={vaccine_name} />
-   )
+    )
   }
-  renderCompanyName=(vaccines_assigned_and_not_used)=>{
-    var company_name=""
+  renderCompanyName = (vaccines_assigned_and_not_used) => {
+    var company_name = ""
     var vaccines_assigned_and_not_used = vaccines_assigned_and_not_used.filter(obj => {
       return obj.key === this.state.vaccine_id
     })
-    if(this.state.vaccine_id!="" && vaccines_assigned_and_not_used[0]!=undefined){
-      company_name=vaccines_assigned_and_not_used[0].company_name
-      if(this.state.company_name!=company_name){
-        this.setState({company_name:company_name})
+    if (this.state.vaccine_id != "" && vaccines_assigned_and_not_used[0] != undefined) {
+      company_name = vaccines_assigned_and_not_used[0].company_name
+      if (this.state.company_name != company_name) {
+        this.setState({ company_name: company_name })
       }
     }
     return (
       <input readOnly={true} class="form-control" defaultValue={company_name} />
-   )
+    )
   }
-  renderVaccineQuality=(vaccines_assigned_and_not_used)=>{
-    var vaccine_quality=""
+  renderVaccineQuality = (vaccines_assigned_and_not_used) => {
+    var vaccine_quality = ""
     var vaccines_assigned_and_not_used = vaccines_assigned_and_not_used.filter(obj => {
       return obj.key === this.state.vaccine_id
     })
-    if(this.state.vaccine_id!="" && vaccines_assigned_and_not_used[0]!=undefined){
-      vaccine_quality=vaccines_assigned_and_not_used[0].vaccine_quality
-      if(this.state.vaccine_quality!=vaccine_quality){
-        this.setState({vaccine_quality:vaccine_quality})
+    if (this.state.vaccine_id != "" && vaccines_assigned_and_not_used[0] != undefined) {
+      vaccine_quality = vaccines_assigned_and_not_used[0].vaccine_quality
+      if (this.state.vaccine_quality != vaccine_quality) {
+        this.setState({ vaccine_quality: vaccine_quality })
       }
     }
     return (
       <input readOnly={true} class="form-control" defaultValue={vaccine_quality} />
-   )
+    )
   }
-  renderVaccineType=(vaccines_assigned_and_not_used)=>{
-    var vaccine_type=""
+  renderVaccineType = (vaccines_assigned_and_not_used) => {
+    var vaccine_type = ""
     var vaccines_assigned_and_not_used = vaccines_assigned_and_not_used.filter(obj => {
       return obj.key === this.state.vaccine_id
     })
-    if(this.state.vaccine_id!="" && vaccines_assigned_and_not_used[0]!=undefined){
-      vaccine_type=vaccines_assigned_and_not_used[0].vaccine_type
-      if(this.state.vaccine_type!=vaccine_type){
-        this.setState({vaccine_type:vaccine_type})
+    if (this.state.vaccine_id != "" && vaccines_assigned_and_not_used[0] != undefined) {
+      vaccine_type = vaccines_assigned_and_not_used[0].vaccine_type
+      if (this.state.vaccine_type != vaccine_type) {
+        this.setState({ vaccine_type: vaccine_type })
       }
     }
     return (
       <input readOnly={true} class="form-control" defaultValue={vaccine_type} />
-   )
+    )
   }
-  renderSelectOptions=(vaccines_assigned_and_not_used)=>{
+  renderSelectOptions = (vaccines_assigned_and_not_used) => {
     // console.log(vaccines_assigned_and_not_used)
-    if(vaccines_assigned_and_not_used.length>0 && this.state.vaccine_id==""){
-      this.setState({vaccine_id:vaccines_assigned_and_not_used[0].key})
+    if (vaccines_assigned_and_not_used.length > 0 && this.state.vaccine_id == "") {
+      this.setState({ vaccine_id: vaccines_assigned_and_not_used[0].key })
     }
     return vaccines_assigned_and_not_used.map((vaccine, index) => {
-      const { company_name, key, status,vaccine_name, vaccine_quality,vaccine_type } = vaccine //destructuring
+      const { company_name, key, status, vaccine_name, vaccine_quality, vaccine_type } = vaccine //destructuring
       // console.log(psw)
       // console.log(repeat_pass)
       // console.log(worker.password)
       // console.log(name)
       return (
-         <option value={key}>{key}</option>
+        <option value={key}>{key}</option>
       )
-   })
+    })
   }
-  child_name_changed=(name)=>{
+  child_name_changed = (name) => {
     this.setState({ childname: name })
-    if(name.length>12||name.length<7){
+    if (name.length > 12 || name.length < 7) {
       $(".vaccinate_child_name").html("7-12 chars are allowed")
       $(".vaccinate_child_name").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
+    } else if (!/^[a-zA-Z ]*$/.test(name)) {
       $(".vaccinate_child_name").html("Only alphabets and spaces are allowed")
       $(".vaccinate_child_name").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_child_name").html("...")
       $(".vaccinate_child_name").css("visibility", "hidden");
     }
   }
-  child_bform_changed=(cnic)=>{
+  child_bform_changed = (cnic) => {
     this.setState({ bForm: cnic })
-    if(cnic.length!=13){
+    if (cnic.length != 13) {
       $(".vaccinate_child_bform").html("The digits could be 13 exact")
       $(".vaccinate_child_bform").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_child_bform").html("...")
       $(".vaccinate_child_bform").css("visibility", "hidden");
     }
   }
-  father_name_changed=(name)=>{
+  father_name_changed = (name) => {
     this.setState({ fathername: name })
-    if(name.length>12||name.length<7){
+    if (name.length > 12 || name.length < 7) {
       $(".vaccinate_father_name").html("7-12 chars are allowed")
       $(".vaccinate_father_name").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
+    } else if (!/^[a-zA-Z ]*$/.test(name)) {
       $(".vaccinate_father_name").html("Only alphabets and spaces are allowed")
       $(".vaccinate_father_name").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_father_name").html("...")
       $(".vaccinate_father_name").css("visibility", "hidden");
     }
   }
-  mother_name_changed=(name)=>{
+  mother_name_changed = (name) => {
     this.setState({ mothername: name })
-    if(name.length>12||name.length<7){
+    if (name.length > 12 || name.length < 7) {
       $(".vaccinate_mother_name").html("7-12 chars are allowed")
       $(".vaccinate_mother_name").css("visibility", "visible");
-    } else if(!/^[a-zA-Z ]*$/.test(name)){
+    } else if (!/^[a-zA-Z ]*$/.test(name)) {
       $(".vaccinate_mother_name").html("Only alphabets and spaces are allowed")
       $(".vaccinate_mother_name").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_mother_name").html("...")
       $(".vaccinate_mother_name").css("visibility", "hidden");
     }
   }
-  mother_cnic_changed=(cnic)=>{
+  mother_cnic_changed = (cnic) => {
     this.setState({ cninc: cnic })
-    if(cnic.length!=13){
+    if (cnic.length != 13) {
       $(".vaccinate_mother_cnic").html("The digits could be 13 exact")
       $(".vaccinate_mother_cnic").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_mother_cnic").html("...")
       $(".vaccinate_mother_cnic").css("visibility", "hidden");
     }
   }
-  email_changed=(email)=>{
+  email_changed = (email) => {
     this.setState({ emial: email })
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(re.test(String(email).toLowerCase())){
+    if (re.test(String(email).toLowerCase())) {
       $(".vaccinate_email").html("...")
       $(".vaccinate_email").css("visibility", "hidden");
-    } else{
+    } else {
       $(".vaccinate_email").html("Enter valid email")
       $(".vaccinate_email").css("visibility", "visible");
     }
   }
-  phone_no_changed=(phone_no)=>{
+  phone_no_changed = (phone_no) => {
     this.setState({ phonenumber: phone_no })
-    if(phone_no.length!=11){
+    if (phone_no.length != 11) {
       $(".vaccinate_phone_no").html("The digits could be 11 exact")
       $(".vaccinate_phone_no").css("visibility", "visible");
-    } else{
+    } else {
       $(".vaccinate_phone_no").html("...")
       $(".vaccinate_phone_no").css("visibility", "hidden");
     }
   }
-  address_changed=(name)=>{
+  address_changed = (name) => {
     this.setState({ address: name })
-    if(name.length>80||name.length<15){
+    if (name.length > 80 || name.length < 15) {
       $(".vaccinate_address").html("15-80 chars are allowed")
       $(".vaccinate_address").css("visibility", "visible");
     }
@@ -2231,14 +2231,14 @@ export class Vaccinate extends Component{
     //   $(".vaccinate_address").html("Only alphabets and spaces are allowed")
     //   $(".vaccinate_address").css("visibility", "visible");
     // } 
-    else{
+    else {
       $(".vaccinate_address").html("...")
       $(".vaccinate_address").css("visibility", "hidden");
     }
   }
   vaccinate = () => {
     console.log(this.state.vaccine_id);
-    if (this.state.vaccine_id!=""&&$(".vaccinate_child_name").html() == "..." && $(".vaccinate_child_bform").html() == "..." && $(".vaccinate_father_name").html() == "..." && $(".vaccinate_mother_name").html() == "..." && $(".vaccinate_mother_cnic").html() == "..." && $(".vaccinate_email").html() == "..." && $(".vaccinate_phone_no").html() == "..." && $(".vaccinate_address").html() == "...") {
+    if (this.state.vaccine_id != "" && $(".vaccinate_child_name").html() == "..." && $(".vaccinate_child_bform").html() == "..." && $(".vaccinate_father_name").html() == "..." && $(".vaccinate_mother_name").html() == "..." && $(".vaccinate_mother_cnic").html() == "..." && $(".vaccinate_email").html() == "..." && $(".vaccinate_phone_no").html() == "..." && $(".vaccinate_address").html() == "...") {
       // console.log($("#datepicker").val())
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -2259,7 +2259,7 @@ export class Vaccinate extends Component{
           today = mm + '/' + dd + '/' + yyyy;
           console.log(today)
           this.setState({
-            vaccination_date:today
+            vaccination_date: today
           })
           var database = firebase.database().ref("CHILD RECORD");
           database.push().set({
@@ -2275,15 +2275,15 @@ export class Vaccinate extends Component{
             childgender: this.state.childgender,
             bForm: this.state.bForm,
             address: this.state.address,
-            vaccine_id:this.state.vaccine_id,
-            vaccine_name:this.state.vaccine_name,
-            vaccine_quality:this.state.vaccine_quality,
-            vaccine_type:this.state.vaccine_type,
-            company_name:this.state.company_name,
-            vaccination_date:this.state.vaccination_date
+            vaccine_id: this.state.vaccine_id,
+            vaccine_name: this.state.vaccine_name,
+            vaccine_quality: this.state.vaccine_quality,
+            vaccine_type: this.state.vaccine_type,
+            company_name: this.state.company_name,
+            vaccination_date: this.state.vaccination_date
           })
           var update = {}
-          update["VACCINE/" + this.state.vaccine_id + "/status"] = "used".concat("-",window.localStorage.getItem("cnic"))
+          update["VACCINE/" + this.state.vaccine_id + "/status"] = "used".concat("-", window.localStorage.getItem("cnic"))
           firebase.database().ref().update(update)
           // var vaccines=this.state.vaccines
           // vaccines[this.state.vaccine_id].status="used".concat("-",window.localStorage.getItem("cnic"))
@@ -2315,7 +2315,7 @@ export class Vaccinate extends Component{
       })
     })
   }
-  render(){
+  render() {
     // console.log(this.state)
     var vaccines_assigned_and_not_used_count = 0;
     var vaccines_assigned_and_not_used = [];
@@ -2347,8 +2347,8 @@ export class Vaccinate extends Component{
       var structured_vaccines_extracted = structured_vaccines.filter(obj => {
         return obj.key === element.vaccine_id
       })
-      if(structured_vaccines_extracted[0]!=undefined){
-        if (!structured_vaccines_extracted[0].status.includes("used")){
+      if (structured_vaccines_extracted[0] != undefined) {
+        if (!structured_vaccines_extracted[0].status.includes("used")) {
           vaccines_assigned_and_not_used.push(structured_vaccines_extracted[0])
         }
       }
@@ -2368,7 +2368,7 @@ export class Vaccinate extends Component{
       // maxDate: new Date,
       // minDate: new Date(2014, 1, 1)
     })
-    return(
+    return (
       <div>
         <section className="content">
           <div class="header">Vaccinate</div>
@@ -2380,19 +2380,19 @@ export class Vaccinate extends Component{
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Child Name</label>
-                  <input onChange={(event)=>{this.child_name_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter child name" />
+                  <input onChange={(event) => { this.child_name_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter child name" />
                   <span class="vaccinate_child_name validation_msg">Enter child name</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Child Gender</label>
-                  <select class="Dropdown-control form-control " id="lang" onChange={(event) => { this.setState({ childgender:event.target.value }) }} value={this.state.childgender}>
+                  <select class="Dropdown-control form-control " id="lang" onChange={(event) => { this.setState({ childgender: event.target.value }) }} value={this.state.childgender}>
                     <option value="Boy">Boy</option>
                     <option value="Girl">Girl</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Child bForm</label>
-                  <input type="number" onChange={(event)=>{this.child_bform_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter child bForm" />
+                  <input type="number" onChange={(event) => { this.child_bform_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter child bForm" />
                   <span class="vaccinate_child_bform validation_msg">Enter child bForm</span>
                 </div>
                 <div class="form-group">
@@ -2406,27 +2406,27 @@ export class Vaccinate extends Component{
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Father Name</label>
-                  <input onChange={(event)=>{this.father_name_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter father name" />
+                  <input onChange={(event) => { this.father_name_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter father name" />
                   <span class="vaccinate_father_name validation_msg">Enter father name</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Mother Name</label>
-                  <input onChange={(event)=>{this.mother_name_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter mother name" />
+                  <input onChange={(event) => { this.mother_name_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter mother name" />
                   <span class="vaccinate_mother_name validation_msg">Enter mother name</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Mother Cnic</label>
-                  <input type="number" onChange={(event)=>{this.mother_cnic_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter mother cnic" />
+                  <input type="number" onChange={(event) => { this.mother_cnic_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter mother cnic" />
                   <span class="vaccinate_mother_cnic validation_msg">Enter mother cnic</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email</label>
-                  <input onChange={(event)=>{this.email_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                  <input onChange={(event) => { this.email_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
                   <span class="vaccinate_email validation_msg">Enter email</span>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Phone</label>
-                  <input type="number" onChange={(event)=>{this.phone_no_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter phone no" />
+                  <input type="number" onChange={(event) => { this.phone_no_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter phone no" />
                   <span class="vaccinate_phone_no validation_msg">Enter phone no</span>
                 </div>
                 <div class="form-group">
@@ -2453,7 +2453,7 @@ export class Vaccinate extends Component{
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Address</label>
-                  <input onChange={(event)=>{this.address_changed(event.target.value)}} class="form-control" id="exampleInputEmail1" placeholder="Enter address" />
+                  <input onChange={(event) => { this.address_changed(event.target.value) }} class="form-control" id="exampleInputEmail1" placeholder="Enter address" />
                   <span class="vaccinate_address validation_msg">Enter address</span>
                 </div>
               </div>
@@ -2467,27 +2467,27 @@ export class Vaccinate extends Component{
     )
   }
 }
-export class Report extends Component{
+export class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      child_record:"",
-      worker_vaccine:"",
-      workers:"",
-      records:""
+      child_record: "",
+      worker_vaccine: "",
+      workers: "",
+      records: ""
     }
   }
-  calculateAge=(dateString)=>{
+  calculateAge = (dateString) => {
     var now = new Date();
     var today = new Date(now.getYear(), now.getMonth(), now.getDate());
 
     var yearNow = now.getYear();
     var monthNow = now.getMonth();
     var dateNow = now.getDate();
-    dateString=dateString.split("-")
+    dateString = dateString.split("-")
     console.log(dateString[2])
     var dob = new Date(dateString[2].toString(),
-      dateString[1].toString()-1,
+      dateString[1].toString() - 1,
       dateString[0].toString()
     );
     console.log(dob)
@@ -2552,13 +2552,13 @@ export class Report extends Component{
       ageString = age.months + monthString + " old.";
     else ageString = "Oops! Could not calculate age!";
 
-    return ageString  
+    return ageString
   }
   renderAge(dateString) {
-    var ageString=this.calculateAge(dateString)
+    var ageString = this.calculateAge(dateString)
     // var ageDate = new Date(ageDifMs); // miliseconds from epoch
     // var age=Math.abs(ageDate.getUTCFullYear() - 1970);
-    return ( 
+    return (
       <td> {ageString} </td>
     )
   }
@@ -2583,42 +2583,42 @@ export class Report extends Component{
     })
     console.log(this.state.workers)
   }
-  render(){
-    const columns=[
+  render() {
+    const columns = [
       {
-        Header:"Worker",
-        accessor:"Worker",
+        Header: "Worker",
+        accessor: "Worker",
       },
       {
-        Header:"Vaccine",
-        accessor:"Vaccine",
+        Header: "Vaccine",
+        accessor: "Vaccine",
       },
       {
-        Header:"Child",
-        accessor:"Child",
+        Header: "Child",
+        accessor: "Child",
       },
       {
-        Header:"Gender",
-        accessor:"Gender",
+        Header: "Gender",
+        accessor: "Gender",
       },
       {
-        Header:"Age",
-        accessor:"Age",
+        Header: "Age",
+        accessor: "Age",
       },
       {
-        Header:"Mother",
-        accessor:"Mother",
+        Header: "Mother",
+        accessor: "Mother",
       },
       // {
       //   Header:"Email",
       //   accessor:"Email",
       // },
       {
-        Header:"Date",
-        accessor:"Date",
+        Header: "Date",
+        accessor: "Date",
       },
     ]
-    const data=[]
+    const data = []
 
     var structured_worker_vaccine = [];
     for (var key in this.state.worker_vaccine) {
@@ -2629,7 +2629,7 @@ export class Report extends Component{
       obj["key"] = key
       structured_worker_vaccine.push(obj)
     }
-    if(window.localStorage.getItem("role")!="Admin"){
+    if (window.localStorage.getItem("role") != "Admin") {
       var structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
         return obj.worker_cnic === window.localStorage.getItem("cnic")
       })
@@ -2665,48 +2665,48 @@ export class Report extends Component{
       obj["key"] = key
       structured_child_record.push(obj)
     }
-    if(window.localStorage.getItem("role")!="Admin"){
+    if (window.localStorage.getItem("role") != "Admin") {
       var structured_child_record = structured_child_record.filter(obj => {
         return vaccine_ids.includes(obj.vaccine_id)
       })
     }
     // console.log(structured_child_record)
-    if(structured_child_record.length==0){
+    if (structured_child_record.length == 0) {
       console.log("NO DATA")
-    } else{
-      var records="";
-      structured_child_record.map((child,index)=>{
-        const {bForm,childgender,childname,cninc,dateofBirth,emial,fathername,latitude,longitude,mothername,phonenumber,vaccine_id,vaccination_date}=child
+    } else {
+      var records = "";
+      structured_child_record.map((child, index) => {
+        const { bForm, childgender, childname, cninc, dateofBirth, emial, fathername, latitude, longitude, mothername, phonenumber, vaccine_id, vaccination_date } = child
         var temp_worker_vaccine = structured_worker_vaccine.filter(obj => {
           return obj.vaccine_id === vaccine_id
         })
-        var worker_name=""
+        var worker_name = ""
         console.log(vaccine_id)
         console.log(temp_worker_vaccine)
-        if(temp_worker_vaccine[0]!=undefined){
+        if (temp_worker_vaccine[0] != undefined) {
           var temp_worker = structured_workers.filter(obj => {
-            return obj.cnic==temp_worker_vaccine[0].worker_cnic
+            return obj.cnic == temp_worker_vaccine[0].worker_cnic
           })
-          worker_name=temp_worker[0].name
+          worker_name = temp_worker[0].name
         }
-        console.log(temp_worker) 
+        console.log(temp_worker)
         data.push(
           {
-            Worker:worker_name,
-            Vaccine:vaccine_id,
-            Child:childname,
-            Gender:childgender,
-            Age:this.calculateAge(dateofBirth),
-            Mother:mothername,
+            Worker: worker_name,
+            Vaccine: vaccine_id,
+            Child: childname,
+            Gender: childgender,
+            Age: this.calculateAge(dateofBirth),
+            Mother: mothername,
             // Email:emial,
-            Date:vaccination_date
+            Date: vaccination_date
           }
         )
-        
+
       })
     }
     console.log(data)
-    return(
+    return (
       <div>
         <section className="content recordSection">
           <div class="header">Report</div>
@@ -2753,7 +2753,7 @@ export class Report extends Component{
   }
 }
 export class Doughnut extends Component {
-  donutChart=()=>{
+  donutChart = () => {
     //-------------
     //- PIE CHART -
     //-------------
@@ -2782,7 +2782,7 @@ export class Doughnut extends Component {
           this.props.x3_title
         ]
       },
-      options:{
+      options: {
         legend: {
           display: false,
           position: 'bottom',
@@ -2801,42 +2801,42 @@ export class Doughnut extends Component {
         }
       },
     };
-    if(this.props.title=="Workers"){
+    if (this.props.title == "Workers") {
       var ctx = document.getElementById("pieChart").getContext("2d");
     } else {
       var ctx = document.getElementById("pieChart2").getContext("2d");
     }
     window.myPie = new Chart(ctx, config);
     Chart.pluginService.register({
-      beforeDraw: function(chart) {
+      beforeDraw: function (chart) {
         var width = chart.chart.width,
-            height = chart.chart.height,
-            ctx = chart.chart.ctx;
+          height = chart.chart.height,
+          ctx = chart.chart.ctx;
 
         ctx.restore();
-        var fontSize = (height / 114).toFixed(2)-1;
+        var fontSize = (height / 114).toFixed(2) - 1;
         ctx.font = fontSize + "em sans-serif";
         ctx.textBaseline = "middle";
         var centerConfig = chart.config.options.elements.center;
         var text = centerConfig.text,
-            textX = Math.round((width - ctx.measureText(text).width) / 2),
-            textY = height / 2;
+          textX = Math.round((width - ctx.measureText(text).width) / 2),
+          textY = height / 2;
 
         ctx.fillText(text, textX, textY);
         ctx.save();
       }
     });
   }
-  componentDidMount(){
+  componentDidMount() {
     this.donutChart()
   }
-  render(){
-    return(
+  render() {
+    return (
       <div class="charts_div">
-        {this.props.title=="Workers" &&
-        <canvas id="pieChart"></canvas>}
-        {this.props.title=="Vaccines" &&
-        <canvas id="pieChart2"></canvas>}
+        {this.props.title == "Workers" &&
+          <canvas id="pieChart"></canvas>}
+        {this.props.title == "Vaccines" &&
+          <canvas id="pieChart2"></canvas>}
       </div>
     )
   }
@@ -2859,7 +2859,7 @@ export default class App extends Component {
     if (this.state.page == "dashboard" || window.localStorage.getItem("email") != null) {
       return (
         <div>
-          <Dashboard changePage={this.change_page}/>
+          <Dashboard changePage={this.change_page} />
           {/* This is dashboard of {window.localStorage.name} */}
         </div>
       )
