@@ -4,9 +4,21 @@ import admin from 'firebase-admin'
 import './App.css';
 import male_pic from './images/male.png'
 import female_pic from './images/female.png'
+import injection_pic from './images/injection.png'
 import Chart from 'chart.js'
 import MapContainer from './external_components/Goodle_Map.js';
+import L from 'leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import ReactTable from 'react-table';
+import "react-table/react-table.css";
+
 const $ = window.$;
+// const pointerIcon = new L.Icon({
+//   iconUrl: './images/injection.png',
+//   iconAnchor: [5, 55],
+//   popupAnchor: [10, -44],
+//   iconSize: [25, 55],
+// })
 let profile_pic="";
 if(window.localStorage.getItem("gender")=="Male"){
   profile_pic=male_pic
@@ -22,7 +34,7 @@ var firebaseConfig = {
   messagingSenderId: "18463849163",
   appId: "1:18463849163:web:153628101f1a20d609394e"
 };
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig); 
 // Fetch the service account key JSON file contents
 // not using admin
 // var serviceAccount = require("./serviceAccountKey.json");
@@ -674,6 +686,123 @@ export class Dashboard_Index extends Component{
       vaccines_used:0,
     }
   }
+  calculateAge = (dateString) => {
+    var now = new Date();
+    var today = new Date(now.getYear(), now.getMonth(), now.getDate());
+
+    var yearNow = now.getYear();
+    var monthNow = now.getMonth();
+    var dateNow = now.getDate();
+    dateString = dateString.split("-")
+    // console.log(dateString[2])
+    var dob = new Date(dateString[2].toString(),
+      dateString[1].toString() - 1,
+      dateString[0].toString()
+    );
+    // console.log(dob)
+    var yearDob = dob.getYear();
+    var monthDob = dob.getMonth();
+    var dateDob = dob.getDate();
+    var age = {};
+    var ageString = "";
+    var yearString = "";
+    var monthString = "";
+    var dayString = "";
+
+
+    var yearAge = yearNow - yearDob;
+
+    if (monthNow >= monthDob)
+      var monthAge = monthNow - monthDob;
+    else {
+      yearAge--;
+      var monthAge = 12 + monthNow - monthDob;
+    }
+
+    if (dateNow >= dateDob)
+      var dateAge = dateNow - dateDob;
+    else {
+      monthAge--;
+      var dateAge = 31 + dateNow - dateDob;
+
+      if (monthAge < 0) {
+        monthAge = 11;
+        yearAge--;
+      }
+    }
+
+    age = {
+      years: yearAge,
+      months: monthAge,
+      days: dateAge
+    };
+
+    if (age.years > 1) yearString = " years";
+    else yearString = " year";
+    if (age.months > 1) monthString = " months";
+    else monthString = " month";
+    if (age.days > 1) dayString = " days";
+    else dayString = " day";
+
+
+    if ((age.years > 0) && (age.months > 0) && (age.days > 0))
+      ageString = age.years + yearString + ", " + age.months + monthString + ", and " + age.days + dayString + " old.";
+    else if ((age.years == 0) && (age.months == 0) && (age.days > 0))
+      ageString = "Only " + age.days + dayString + " old!";
+    else if ((age.years > 0) && (age.months == 0) && (age.days == 0))
+      ageString = age.years + yearString + " old. Happy Birthday!!";
+    else if ((age.years > 0) && (age.months > 0) && (age.days == 0))
+      ageString = age.years + yearString + " and " + age.months + monthString + " old.";
+    else if ((age.years == 0) && (age.months > 0) && (age.days > 0))
+      ageString = age.months + monthString + " and " + age.days + dayString + " old.";
+    else if ((age.years > 0) && (age.months == 0) && (age.days > 0))
+      ageString = age.years + yearString + " and " + age.days + dayString + " old.";
+    else if ((age.years == 0) && (age.months > 0) && (age.days == 0))
+      ageString = age.months + monthString + " old.";
+    else ageString = "Oops! Could not calculate age!";
+
+    return ageString
+  }
+  renderMarkers() {
+    
+    // var longitudes = []
+    var structured_child_record = []
+    for (var key_ in this.state.child_record) {
+      // skip loop if the property is from prototype
+      if (!this.state.child_record.hasOwnProperty(key_)) continue;
+      var obj = this.state.child_record[key_];
+      obj["key"] = key_
+      structured_child_record.push(obj)
+    }
+    console.log(structured_child_record)
+    var pointerIcon = new L.Icon({
+      iconUrl: injection_pic,
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -35],
+      iconSize: [40, 40],
+      // shadowUrl: './images/injection.png',
+      // shadowSize: [29, 40],
+      // shadowAnchor: [7, 40],
+    })
+    return structured_child_record.map((child, index) => {
+      const {
+        longitude,
+        latitude,
+        childname,
+        dateofBirth
+      } = child
+      console.log("lon:"+longitude)
+      console.log("lat:"+latitude)
+      var ageString = this.calculateAge(dateofBirth)
+      return ( 
+        <Marker position={[latitude,longitude]} draggable={true} icon={pointerIcon}>
+          <Popup>
+            {childname} ({ageString})
+          </Popup>
+        </Marker>
+      )
+    })
+  }
   collapse_charts(){
     console.log("collapsing")
     if($("#charts_icon").hasClass("fa-minus")){
@@ -806,7 +935,6 @@ export class Dashboard_Index extends Component{
         vaccines_unassigned: vaccines_unassigned
       })
     }
-    
     var structured_child_record = []
     for (var key_ in this.state.child_record) {
       // skip loop if the property is from prototype
@@ -815,11 +943,6 @@ export class Dashboard_Index extends Component{
       obj["key"] = key_
       structured_child_record.push(obj)
     }
-    console.log(structured_child_record)
-    // var longitudes = structured_child_record.map(a => a.longitude);
-    // var latitudes = structured_child_record.map(a => a.latitude);
-    // var titles = structured_child_record.map(a => a.childname);
-    // console.log(this.state)
     return(
       <div>
         <section className="content">
@@ -863,11 +986,16 @@ export class Dashboard_Index extends Component{
               </div>
             </div>
             <div class="box-body map_box_" >
-              <div id="google_map">
-                <MapContainer 
-                  child_record={structured_child_record}
-                />
-              </div>
+              {/* FOR GOOGLE MAPS */}
+            {/* <div id="google_map">
+              <MapContainer child_record={structured_child_record} /> 
+            </div> */}
+            {/* FOR OPEN STREET MAPS */}
+            <Map className="map" center={[33.766,72.361]} zoom={13}>
+              <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              {this.renderMarkers()}
+            </Map>
             </div>
           </div>
         </section>
@@ -1467,7 +1595,7 @@ export class Vaccines extends Component{
     }
   }
   renderAssignBtn(status,key){
-    if (status == "unassigned") {
+    if (status == "unassigned") {//>?
       return(<td><button id={"btn-"+key} ref={btn => { this.btn = btn; }}  onClick={()=>{this.assign_vaccine(key)}} class='btn btn-success'>Assign</button></td>)
     } else {
       return(<td><button ref="btn" disabled={true} class='btn btn-success'>Assign</button></td>)
@@ -1934,6 +2062,7 @@ export class Vaccinate extends Component{
       company_name:"",
       vaccine_quality:"",
       vaccine_type:"",
+      vaccination_date:""
     };
   }
   renderVaccineName=(vaccines_assigned_and_not_used)=>{
@@ -2122,6 +2251,16 @@ export class Vaccinate extends Component{
           this.setState({
             latitude: lat
           })
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+
+          today = mm + '/' + dd + '/' + yyyy;
+          console.log(today)
+          this.setState({
+            vaccination_date:today
+          })
           var database = firebase.database().ref("CHILD RECORD");
           database.push().set({
             phonenumber: this.state.phonenumber,
@@ -2141,6 +2280,7 @@ export class Vaccinate extends Component{
             vaccine_quality:this.state.vaccine_quality,
             vaccine_type:this.state.vaccine_type,
             company_name:this.state.company_name,
+            vaccination_date:this.state.vaccination_date
           })
           var update = {}
           update["VACCINE/" + this.state.vaccine_id + "/status"] = "used".concat("-",window.localStorage.getItem("cnic"))
@@ -2333,6 +2473,8 @@ export class Report extends Component{
     this.state = {
       child_record:"",
       worker_vaccine:"",
+      workers:"",
+      records:""
     }
   }
   calculateAge=(dateString)=>{
@@ -2420,7 +2562,64 @@ export class Report extends Component{
       <td> {ageString} </td>
     )
   }
-  renderTableData() {
+  componentDidMount() {
+    var get_worker_vaccine = firebase.database().ref('WORKER_VACCINE');
+    get_worker_vaccine.on('value', (snapshot) => {
+      this.setState({
+        worker_vaccine: snapshot.val()
+      })
+    })
+    var get_child_record = firebase.database().ref('CHILD RECORD');
+    get_child_record.on('value', (snapshot) => {
+      this.setState({
+        child_record: snapshot.val()
+      })
+    })
+    var get_worker = firebase.database().ref('WORKER');
+    get_worker.on('value', (snapshot) => {
+      this.setState({
+        workers: snapshot.val()
+      })
+    })
+    console.log(this.state.workers)
+  }
+  render(){
+    const columns=[
+      {
+        Header:"Worker",
+        accessor:"Worker",
+      },
+      {
+        Header:"Vaccine",
+        accessor:"Vaccine",
+      },
+      {
+        Header:"Child",
+        accessor:"Child",
+      },
+      {
+        Header:"Gender",
+        accessor:"Gender",
+      },
+      {
+        Header:"Age",
+        accessor:"Age",
+      },
+      {
+        Header:"Mother",
+        accessor:"Mother",
+      },
+      // {
+      //   Header:"Email",
+      //   accessor:"Email",
+      // },
+      {
+        Header:"Date",
+        accessor:"Date",
+      },
+    ]
+    const data=[]
+
     var structured_worker_vaccine = [];
     for (var key in this.state.worker_vaccine) {
       // skip loop if the property is from prototype
@@ -2430,11 +2629,32 @@ export class Report extends Component{
       obj["key"] = key
       structured_worker_vaccine.push(obj)
     }
-    var structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
-      return obj.worker_cnic === window.localStorage.getItem("cnic")
-    })
+    if(window.localStorage.getItem("role")!="Admin"){
+      var structured_worker_vaccine = structured_worker_vaccine.filter(obj => {
+        return obj.worker_cnic === window.localStorage.getItem("cnic")
+      })
+    }
     console.log(structured_worker_vaccine)
     var vaccine_ids = structured_worker_vaccine.map(a => a.vaccine_id);
+    // var worker_cnics = structured_worker_vaccine.map(a => a.worker_cnic);
+
+    var structured_workers = [];
+    for (var key in this.state.workers) {
+      // skip loop if the property is from prototype
+      if (!this.state.workers.hasOwnProperty(key)) continue;
+      var obj = this.state.workers[key];
+      // console.log(key)
+      obj["key"] = key
+      structured_workers.push(obj)
+    }
+    console.log("Workers_Vaccines:")
+    console.log(structured_worker_vaccine)
+    // var structured_workers = structured_workers.filter(obj => {
+    //   return worker_cnics.includes(obj.cnic)
+    // })
+    // console.log(worker_cnics)
+    console.log("Workers:")
+    console.log(structured_workers)
 
     var structured_child_record = [];
     for (var key in this.state.child_record) {
@@ -2450,55 +2670,83 @@ export class Report extends Component{
         return vaccine_ids.includes(obj.vaccine_id)
       })
     }
-    console.log(structured_child_record)
+    // console.log(structured_child_record)
     if(structured_child_record.length==0){
-      return <td colSpan={6}><h3 class="no_data">There are no vaccinations done Yet</h3></td>
+      console.log("NO DATA")
     } else{
-      return structured_child_record.map((child,index)=>{
-        const {bForm,childgender,childname,cninc,dateofBirth,emial,fathername,latitude,longitude,mothername,phonenumber,vaccine_id}=child
-        return(
-          <tr>
-            <td>{vaccine_id}</td>
-            <td>{childname}</td>
-            <td>{childgender}</td>
-            {this.renderAge(dateofBirth)}
-            <td>{mothername}</td>
-            <td>{emial}</td>
-          </tr>
+      var records="";
+      structured_child_record.map((child,index)=>{
+        const {bForm,childgender,childname,cninc,dateofBirth,emial,fathername,latitude,longitude,mothername,phonenumber,vaccine_id,vaccination_date}=child
+        var temp_worker_vaccine = structured_worker_vaccine.filter(obj => {
+          return obj.vaccine_id === vaccine_id
+        })
+        var worker_name=""
+        console.log(vaccine_id)
+        console.log(temp_worker_vaccine)
+        if(temp_worker_vaccine[0]!=undefined){
+          var temp_worker = structured_workers.filter(obj => {
+            return obj.cnic==temp_worker_vaccine[0].worker_cnic
+          })
+          worker_name=temp_worker[0].name
+        }
+        console.log(temp_worker) 
+        data.push(
+          {
+            Worker:worker_name,
+            Vaccine:vaccine_id,
+            Child:childname,
+            Gender:childgender,
+            Age:this.calculateAge(dateofBirth),
+            Mother:mothername,
+            // Email:emial,
+            Date:vaccination_date
+          }
         )
+        
       })
     }
-  }
-  componentDidMount() {
-    var get_worker_vaccine = firebase.database().ref('WORKER_VACCINE');
-    get_worker_vaccine.on('value', (snapshot) => {
-      this.setState({
-        worker_vaccine: snapshot.val()
-      })
-    })
-    var get_child_record = firebase.database().ref('CHILD RECORD');
-    get_child_record.on('value', (snapshot) => {
-      this.setState({
-        child_record: snapshot.val()
-      })
-    })
-  }
-  render(){
+    console.log(data)
     return(
       <div>
-        <section className="content">
+        <section className="content recordSection">
           <div class="header">Report</div>
-          <table class="table table-responsive" border="1">
-            <tr>
-              <th>Vaccine</th>
-              <th>Child Name</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Mother</th>
-              <th>Email</th>
-            </tr>
-            {this.renderTableData()}
-          </table>
+          <ReactTable
+            columns={columns}
+            data={data}
+            filterable
+            defaultPageSize={5}
+          >
+
+          </ReactTable>
+          {/* <table id="example" class="display" style={{width:"100%"}}>
+            <thead>
+                <tr>
+                  <th>Worker</th>
+                  <th>Vaccine</th>
+                  <th>Child </th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>Mother</th>
+                  <th>Email</th>
+                  <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="childRecordTableBody">
+                {this.renderTableData()}
+            </tbody>
+            <tfoot>
+                <tr>
+                  <th>Worker</th>
+                  <th>Vaccine</th>
+                  <th>Child </th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>Mother</th>
+                  <th>Email</th>
+                  <th>Date</th>
+                </tr>
+            </tfoot>
+        </table> */}
         </section>
       </div>
     )

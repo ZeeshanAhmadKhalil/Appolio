@@ -1,6 +1,7 @@
 {
   "name": "appolio",
   "version": "0.1.0",
+  "homepage": "http://localhost:3001/",
   "private": true,
   "dependencies": {
     "@react-navigation/native": "^5.1.5",
@@ -15,14 +16,17 @@
     "google-map-react": "^1.1.7",
     "google-maps-react": "^2.0.6",
     "http2": "^3.3.7",
+    "leaflet": "^1.6.0",
     "npm-overlapping-marker-spiderfier": "^1.0.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
     "react-google-maps": "^9.4.5",
+    "react-leaflet": "^2.7.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-table": "^6.8.2"
   },
   "scripts": {
     "start": "react-scripts start",

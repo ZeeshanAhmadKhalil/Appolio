@@ -227,6 +227,12 @@ th{
 	pointer-events:none;
     opacity:0.4;
 }
+.map{
+	height: 500px;
+}
+.recordSection{
+	min-height: 690px;
+}
 @media screen and (max-width: 767px) {
 	.header {
 		margin-top: 92px;
